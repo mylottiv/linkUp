@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <script src='/socket.io/socket.io.js'></script>
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css" integrity="sha256-13EKEXRsynh3cmmNF1dlW6uvoC1SZVaW94bIHZQJoMU=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head>
+    <body>
+        <div class='container'>
+            <ul id='chat-box'>
+            </ul>
+            <form id='chat-submission'>
+                <div class='row input-field'>
+                    <input class='validate' type='text' name='user' id='user'>
+                    <label class='active' for='user'>User</label>
+                </div>
+                <div class='row input-field'>    
+                    <input class='validate' type='text' name='message' id='message'>
+                    <label class='active' for='message'>Message</label>
+                </div>
+                <div class='row'>
+                    <blockquote id='currently-typing'></blockquote>
+                </div>
+                <div class='row input-field'>
+                    <button type='submit' class='btn' name='send-button' id='send-button'>SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script>
+        $(function() {
+            M.updateTextFields();
+            const socket = io('http://localhost:3000');
+            socket.on('connect', function() {
+                console.log('Client socket connected');
+                socket.on('message', function(newMessage) {
+                    console.log('newMessage:', newMessage);
+                    $('#currently-typing').text('');
+                    const {user, message} = newMessage;
+                    $('#chat-box').html($('#chat-box').html() + `<li class='card'><div class='card-content'>${user}: ${message}</div></li>`);
+                });
+                socket.on('typing', function(typingUser) {
+                    console.log(typingUser, 'is typing');
+                    $('#currently-typing').text(`${typingUser} is currently typing`);
+                })
+            });
+            $('#chat-submission').submit(function(e) {
+                e.preventDefault();
+                const data = {
+                    user: $('#user').val(),
+                    message: $('#message').val()
+                }
+                socket.emit('message', data);
+            });
+            $('#message').keyup(function(e) {
+                e.preventDefault();
+                console.log('keyup fired');
+                socket.emit('typing', $('#user').val());
+            });
+        });
+    </script>
+</html>
