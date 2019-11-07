@@ -1,5 +1,5 @@
 <div class='container'>
-    <h1>{{roomName}}</h1>
+    <h1 id='roomname'>{{roomName}}</h1>
     <ul id='chat-box'>
         {{#each messages}}
         <li class='card'>
@@ -38,11 +38,14 @@
 
             console.log('Client socket connected');
 
+            socket.emit('join', $('#roomname').text());
+
+
             // Client-side new message listener
             socket.on('new message', function(newMessage) {
-
+ 
                 console.log('New message:', newMessage);
-                const {user, message} = newMessage;
+                const {user, content} = newMessage;
 
                 // Reset user typing message if message not from client user
                 // if (user !== clientUser) {
@@ -50,7 +53,7 @@
                 // };
 
                 // Add new chat message card to chat box
-                $('#chat-box').html($('#chat-box').html() + `<li class='card'><div class='card-content'>${user}: ${message}</div></li>`);
+                $('#chat-box').html($('#chat-box').html() + `<li class='card'><div class='card-content'>${user}: ${content}</div></li>`);
             
             });
 
@@ -72,8 +75,9 @@
 
             // Assemble message data and emit as new message event
             const data = {
+                roomName: $('#roomname').text(),
                 user: $('#user').val(),
-                message: $('#message').val()
+                content: $('#message').val()
             };
             socket.emit('new message', data);
 
