@@ -21,18 +21,45 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Init chatroom object
-const Chatrooms = {
-    rooms: [
-        {roomName: "Showdown"}
-    ],
-}
+const rooms = [
+        {
+            roomName: "Test1",
+            users: ['bob', 'jane'],
+            messages: [
+                {
+                user: 'bob',
+                content: 'testytest'
+                }
+            ]
+        },
+        {
+            roomName: "Test2",
+            users: ['bob', 'jane'],
+            messages: [
+                {
+                user: 'bob',
+                content: 'testytest'
+                }
+            ]
+        }
+    ]
 
 // Home get controller
 app.get('/:home?', function(req, res, next) {
 
     // Serve home view if route goes to root, "home", or "index"
     if (req.params.home === 'home' || req.params.home === 'index' || !req.params.home) {
-        res.render("home", Chatrooms);
+        
+        // Assemble array of room names
+        const roomNames = rooms.map(function(room) {
+            const name = {};
+            name.roomName = room.roomName
+            return name
+        });
+
+        // Send list of rooms to home view
+        res.render("home", {roomNames});
+
     }
 
     // Otherwise fall through to chat room route controller
@@ -45,8 +72,36 @@ app.get('/:home?', function(req, res, next) {
 // Chatroom get controller
 app.get('/:chat', function(req, res, next) {
 
-    // Serve chatroom view for room name from route
-    res.render('chat', {roomName: req.params.chat});
+    // Assemble array of room names
+    const roomNames = rooms.map(function(room) {
+
+        // Wrap room name inside object and return
+        const name = {};
+        name.roomName = room.roomName
+        return name
+    
+    });
+
+    // Find index of relevant chatroom, if exists, otherwise will be -1
+    const requestedRoomIndex = roomNames.indexOf(roomNames.find((name) => name.roomName === req.params.chat));
+
+    console.log(requestedRoomIndex);
+    console.log(rooms[requestedRoomIndex]);
+
+    // If the chatroom exists then the index will not be -1
+    if (requestedRoomIndex !== -1) {
+        
+        // Serve given chatroom view
+        res.render('chat', rooms[requestedRoomIndex]);
+    
+    }
+
+    // If chatroom doesn't exist, redirect to home
+    else {
+
+        res.render('home', {roomNames});
+
+    };
 
 })
 
