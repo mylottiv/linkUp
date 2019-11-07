@@ -1,7 +1,7 @@
 $(function() {
         
     // Toggle Materialize input labels
-    M.updateTextFields();
+    // M.updateTextFields();
 
     // Capture clientRoom from header
     const clientRoomName = $('#roomname').text();
