@@ -56,6 +56,9 @@ $(function() {
         };
         socket.emit('new message', data);
 
+        // Reset message field upon submission
+        $('#message').val('');
+
     });
 
     // Handler for user typing event
