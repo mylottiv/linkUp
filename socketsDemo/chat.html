@@ -32,32 +32,64 @@
     </body>
     <script>
         $(function() {
+            
+            // Toggle Materialize input labels
             M.updateTextFields();
+
+            // Initialize socket connection
             const socket = io('http://localhost:3000');
             socket.on('connect', function() {
+
                 console.log('Client socket connected');
-                socket.on('message', function(newMessage) {
-                    console.log('newMessage:', newMessage);
-                    $('#currently-typing').text('');
+
+                // Client-side new message listener
+                socket.on('new message', function(newMessage) {
+
+                    console.log('New message:', newMessage);
                     const {user, message} = newMessage;
+
+                    // Reset user typing message if message not from client user
+                    // if (user !== clientUser) {
+                        $('#currently-typing').text('');
+                    // };
+
+                    // Add new chat message card to chat box
                     $('#chat-box').html($('#chat-box').html() + `<li class='card'><div class='card-content'>${user}: ${message}</div></li>`);
+                
                 });
+
+                // Client-side listener for other users typing event
                 socket.on('typing', function(typingUser) {
+
                     console.log(typingUser, 'is typing');
+
+                    // Update currently typing notification
                     $('#currently-typing').text(`${typingUser} is currently typing`);
+
                 })
             });
+
+            // Handler for new message form submission
             $('#chat-submission').submit(function(e) {
+
                 e.preventDefault();
+
+                // Assemble message data and emit as new message event
                 const data = {
                     user: $('#user').val(),
                     message: $('#message').val()
-                }
-                socket.emit('message', data);
+                };
+                socket.emit('new message', data);
+
             });
+
+            // Handler for user typing event
             $('#message').keyup(function(e) {
+
                 e.preventDefault();
                 console.log('keyup fired');
+
+                // Emit typing event with user name
                 socket.emit('typing', $('#user').val());
             });
         });

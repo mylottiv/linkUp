@@ -8,14 +8,18 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'chat.html'));
 })
 
+// Establish server connection
 io.on('connection', function(socket) {
+
     console.log('Socket connected:');
 
-    socket.on('message', function(newMessage) {
+    // Event handler for new messages
+    socket.on('new message', function(newMessage) {
         console.log('New Socket Message', newMessage);
         io.emit('message', newMessage);
     });
 
+    // Event handler for a currently typing user
     socket.on('typing', function(typingUser) {
         console.log(typingUser, 'is currently typing')
         io.emit('typing', typingUser);
