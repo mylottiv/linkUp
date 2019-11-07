@@ -32,13 +32,17 @@
         // Toggle Materialize input labels
         M.updateTextFields();
 
+        // Capture clientRoom from header
+        const clientRoomName = $('#roomname').text();
+
         // Initialize socket connection
         const socket = io('http://localhost:3000');
         socket.on('connect', function() {
 
             console.log('Client socket connected');
 
-            socket.emit('join', $('#roomname').text());
+            // Join client to current chatroom
+            socket.emit('join', clientRoomName);
 
 
             // Client-side new message listener
@@ -75,7 +79,7 @@
 
             // Assemble message data and emit as new message event
             const data = {
-                roomName: $('#roomname').text(),
+                roomName: clientRoomName,
                 user: $('#user').val(),
                 content: $('#message').val()
             };
@@ -89,8 +93,9 @@
             e.preventDefault();
             console.log('keyup fired');
 
-            // Emit typing event with user name
-            socket.emit('typing', $('#user').val());
+            // Emit typing event with user name and room name
+            socket.emit('typing', {user: $('#user').val(), roomName: clientRoomName});
+
         });
     });
 </script>

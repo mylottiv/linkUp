@@ -121,14 +121,15 @@ io.on('connection', function(socket) {
         // Add message to relevant chatroom message list
         rooms[roomNames.indexOf(roomNames.find((name) => name.roomName === roomName))].messages.push({user, content});
         
-        // Sends new message to other users in room
+        // Sends new message to all users in room
         io.to(roomName).emit('new message', {user, content});
     });
 
     // Event handler for a currently typing user
-    socket.on('typing', function(typingUser) {
-        console.log(typingUser, 'is currently typing')
-        io.emit('typing', typingUser);
+    socket.on('typing', function(data) {
+        const {user, roomName} = data;
+        console.log(user, 'is currently typing');
+        socket.to(roomName).emit('typing', user);
     })
 
     socket.on('disconnect', function() {
