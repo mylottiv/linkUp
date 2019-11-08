@@ -1,0 +1,29 @@
+<div class='container'>
+    <h1 id='roomname'>{{roomName}}</h1>
+    <ul id='chat-box'>
+        {{#each messages}}
+        <li class='card'>
+            <div class='card-content'>
+                {{user}}: {{content}}
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <form id='chat-submission'>
+        <div class='row input-field'>
+            <input class='validate' type='text' name='user' id='user'>
+            <label class='active' for='user'>User</label>
+        </div>
+        <div class='row input-field'>    
+            <input class='validate' type='text' name='message' id='message'>
+            <label class='active' for='message'>Message</label>
+        </div>
+        <div class='row'>
+            <blockquote id='currently-typing'></blockquote>
+        </div>
+        <div class='row input-field'>
+            <button type='submit' class='btn' name='send-button' id='send-button'>SUBMIT</button>
+        </div>
+    </form>
+</div>
+<script src='js/chatClient.js'></script>

@@ -1,0 +1,27 @@
+<div class='container'>
+    <ul>
+        {{#each roomNames}}
+        <li class='card'>
+            <div class='card-content'>
+                <p>
+                    <h5>{{roomName}}</h5>
+                    <button type='button' class='btn' id={{roomName}}-join-button>JOIN</button>
+                </p>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <form id='create-chatroom'>
+        <h4>Create New Chatroom</h4>
+        <div class='row input-field'>    
+            <input class='validate' type='text' name='new-chatroom-name' id='new-chatroom-name'>
+            <label class='active' for='new-chatroom-name'>New Chatroom Name</label>
+        </div>
+        <button type='submit' class='btn' name='send-button' id='send-button'>SUBMIT</button>
+    </form>
+</div>
+<script>
+    $(function() {
+        console.log('TODO: Post request handling for creating new chatroom')
+    });
+</script>
