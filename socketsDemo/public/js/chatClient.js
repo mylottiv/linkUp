@@ -10,7 +10,7 @@ $(function() {
     const socket = io('http://localhost:3000');
     socket.on('connect', function() {
 
-        console.log('Client socket connected');
+        console.log('Client socket connected', socket.id);
 
         // Join client to current chatroom
         socket.emit('join', clientRoomName);
