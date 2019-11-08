@@ -2,10 +2,133 @@
   line-height: 2.5;
 }
 
-.header img {
-  float: left;
-  width: 20%;
-  height: 20%;
-  padding: 10px;
-  margin: 10px;
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #DAFFEF;
 }
+
+.logo img{
+  float: left;
+  width: 10%;
+  height: 10%;
+  padding: 1px;
+  margin: 1px;
+}
+
+.navbar{
+  position: absolute;
+  right: 0px;
+  width: 260px;
+  height: 100%;
+  background-color: #000000;
+  text-align: center;
+  transition: 0.800s ease;
+}
+
+.navbar > .side-nav{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item{
+  display: flex;
+}
+.nav-item > .nav-link{
+  text-decoration: none;
+  color: whitesmoke;
+  font-size: 1.1em;
+  padding: 1em;
+  flex: 1;
+}
+
+.nav-item > .nav-link:hover{
+  background-color: whitesmoke;
+  color: black;
+}
+
+.toggle-collapse{
+  float: left;
+  margin-left: -3.3em;
+  margin-top: .5em;
+  content: '';
+  outline: inherit;
+  border: 0px;
+  background-color: transparent;
+}
+
+
+.nav-item > .site-name{
+  text-decoration: none;
+  padding: 1.3em;
+  font-size: 2em;
+  color: whitesmoke;
+}
+
+.nav-item:last-child > .nav-link i{
+  padding: .5em;
+}
+
+.nav-item:hover:last-child > .nav-link{
+  background-color: black;
+  color: white;
+}
+
+.toggle-icon,
+.toggle-icon::before,
+.toggle-icon::after{
+  content: "";
+  width: 30px;
+  height: 3px;
+  position: fixed;
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.7s ease;
+  margin-top: 0.8em;
+}
+
+.toggle-icon::before{
+  position: absolute;
+  left: -1px;
+  margin-top: -0.8em;
+  opacity: 1;
+}
+
+.toggle-icon{
+  width: 15px;
+}
+
+.toggle-icon::after{   
+  position: absolute;
+  left: -1px;
+  margin-top: 0.6em;
+  opacity: 1;
+  width: 20px;
+}
+
+.show .toggle-icon::after{
+  width: 30px;
+}
+
+.show .toggle-icon{
+  width: 30px;
+}
+
+  .map-responsive{
+    overflow: hidden;
+    padding-bottom: 50%;
+    position: relative;
+    height: 0;
+  }
+
+  .map-responsive iframe{
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
