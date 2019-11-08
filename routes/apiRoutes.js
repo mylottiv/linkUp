@@ -2,11 +2,11 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    // db.UserData.findAll({}).then(function(dbExamples) {
-    //   res.json(dbExamples);
-    // });
+  app.get("/", function(req, res) {
+    db.EventData.findAll().then(function(result) {
+      res.render("index", {result})
   });
+});
 
   // Create a new example
   app.post("/api/signup", function(req, res) {
@@ -22,6 +22,21 @@ module.exports = function(app) {
     });
   });
 
+  app.post("/api/events", function(req, res) {
+    db.EventData.create({    
+      eventname:req.body.eventname,  
+      username:req.body.username,
+      address:req.body.address,
+      city:req.body.city,
+      state:req.body.state,
+      zipcode:req.body.zipcode,
+      active: true
+      })
+      .then(function(results) {
+        res.json(results);
+      })
+  });
+
   app.post("/api/login", function(req, res) {
     db.UserData.count({ where: { username: req.body.username, password: req.body.password } })
     .then(count => {
@@ -33,6 +48,8 @@ module.exports = function(app) {
       }
       })
   });
+
+
 
   // Delete an example by id
   app.delete("/api/examples/:id", function(req, res) {

@@ -1,16 +1,20 @@
 var db = require("../models");
 
 module.exports = function(app) {
+  //This GET route already exists in the api routes file
+  
   // Load index page
-  app.get("/", function(req, res) {
-    res.render("index");
-    // db.UserData.findAll({}).then(function(dbExamples) {
-    //   res.render("index", {
-    //     msg: "Welcome!",
-    //     examples: dbExamples
-    //   });
-    // });
-  });
+  // app.get("/", function(req, res) {
+  //   res.render("index");
+  //   // db.UserData.findAll({}).then(function(dbExamples) {
+  //   //   res.render("index", {
+  //   //     msg: "Welcome!",
+  //   //     examples: dbExamples
+  //   //   });
+  //   // });
+  // });
+
+
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
