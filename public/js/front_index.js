@@ -143,3 +143,11 @@ var modal = document.querySelector(".modal");
 // Great! Now if we were to press the trigger or the close button, the modal should smoothly animate between the states. It's all about the pretty animations. 😍
 	
 
+$(document).ready(function(){
+  $('.parallax').parallax();
+});
+
+$(document).ready(function(){
+  $('.modal-trigger').leanModal();
+  });
+
