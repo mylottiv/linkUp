@@ -112,3 +112,42 @@ function myFunc(e){
   }
 
 }
+
+
+/* modal code */
+
+
+var modal = document.querySelector(".modal");
+    var trigger = document.querySelector(".trigger");
+    var closeButton = document.querySelector(".close-button");
+
+    function toggleModal() {
+        modal.classList.toggle("show-modal");
+    }
+
+    function windowOnClick(event) {
+        if (event.target === modal) {
+            toggleModal();
+        }
+    }
+
+    trigger.addEventListener("click", toggleModal);
+    closeButton.addEventListener("click", toggleModal);
+    window.addEventListener("click", windowOnClick);
+
+    // We set three click listeners here:
+
+// When the trigger is clicked, we want to show the modal.
+// When the close button is clicked, we want to hide the modal.
+// When the dark background is clicked, we want to also hide the modal.
+// Great! Now if we were to press the trigger or the close button, the modal should smoothly animate between the states. It's all about the pretty animations. 😍
+	
+
+$(document).ready(function(){
+  $('.parallax').parallax();
+});
+
+$(document).ready(function(){
+  $('.modal-trigger').leanModal();
+  });
+
