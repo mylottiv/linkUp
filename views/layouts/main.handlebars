@@ -7,24 +7,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" href="public/images/logo1.png" type="favicon/ico" />
+    <link rel="shortcut icon" href="../images/logo1.png" type="favicon/ico" />
 
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <link rel="stylesheet" type="text/css" href="public/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+        <!-- jQuery first,  -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js">
+    </script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </head>
 
 <body>
 
-
-
     <div class="container">
         <header>
             <div class="logo">
-                <img src="public/images/logo1.png">
+                <img src="../images/logo1.png">
             </div>
 
             <nav class="navbar" id="navID">
@@ -58,24 +63,21 @@
                     </li>
                 </ul>
             </nav>
-        </header>
-    </div>
-
-    <div id="event" class="modal">
-        <div class="modal-content">
-            <h4>Title</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-        </div>
-    </div>
-
-    <div id="search" class="modal">
-            <div class="modal-content">
-                <h4>Title</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
+            <div id="event" class="modal">
+                <div class="modal-content">
+                    <h4>Title</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
+                </div>
             </div>
-        </div>
-         
-        <div id="profile" class="modal">
+
+            <div id="search" class="modal">
+                <div class="modal-content">
+                    <h4>Title</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
+                </div>
+            </div>
+            
+            <div id="profile" class="modal">
                 <div class="modal-content">
                     <h4>Title</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
@@ -83,20 +85,14 @@
             </div>
 
             <div id="messages" class="modal">
-                    <div class="modal-content">
-                        <h4>Title</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-                    </div>
+                <div class="modal-content">
+                    <h4>Title</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
                 </div>
+            </div>
+        </header>
+        {{{body}}}
     <!-- Optional JavaScript -->
-    <!-- jQuery first,  -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
     <script>
         $(document).ready(function(){
             $('.modal').modal();

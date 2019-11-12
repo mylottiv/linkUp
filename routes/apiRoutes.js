@@ -1,12 +1,18 @@
-var db = require("../models");
+const db = require("../models");
+
+// Init Google Maps Client
+// const googleMapsClient = require('@google/maps').createClient({
+//   key: 'AIzaSyBWQ-sFtacE3m0IMYrFlP7w_dgNQpL-bBw',
+//   Promise: Promise
+// });
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/", function(req, res) {
-    db.EventData.findAll().then(function(result) {
-      res.render("index", {result})
-  });
-});
+//   // Get all examples
+//   app.get("/", function(req, res) {
+//     db.EventData.findAll().then(function(result) {
+//       res.render("index", {result})
+//   });
+// });
 
   // Create a new example
   app.post("/api/signup", function(req, res) {
@@ -22,19 +28,29 @@ module.exports = function(app) {
     });
   });
 
+
+  // Controller for event creation post requests
   app.post("/api/events", function(req, res) {
+
+    const {eventname, creator_id, placeid, location, description} = req.body;
+    const {lat, lng} = location;
+
+    // Create new event entry in DB
     db.EventData.create({    
-      eventname:req.body.eventname,  
-      username:req.body.username,
-      address:req.body.address,
-      city:req.body.city,
-      state:req.body.state,
-      zipcode:req.body.zipcode,
+      creator_id,
+      eventname,
+      address,
+      place_id: placeid,
+      latitude: lat,
+      longitute: lng,
       active: true
-      })
-      .then(function(results) {
-        res.json(results);
-      })
+    })
+    .then(function(results) {
+      res.json(results);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
   });
 
   app.post("/api/login", function(req, res) {
