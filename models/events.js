@@ -4,6 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     eventname:DataTypes.TEXT,
     address:DataTypes.STRING,
     placeid:DataTypes.STRING,
+    groupsize:DataTypes.INTEGER,
+    current_groupsize:DataTypes.INTEGER,
     latitude:DataTypes.FLOAT,
     longitutde:DataTypes.FLOAT,
     active: {
