@@ -1,5 +1,8 @@
 const db = require("../models");
 
+// As with all of these api routes, front end verification will need to be done before
+// any action is completed. Normally you do this on the backend but that feature is not current priority.
+
 // Init Google Maps Client
 // const googleMapsClient = require('@google/maps').createClient({
 //   key: 'AIzaSyBWQ-sFtacE3m0IMYrFlP7w_dgNQpL-bBw',
@@ -41,6 +44,7 @@ module.exports = function(app) {
       eventname,
       address,
       place_id: placeid,
+      description,
       latitude: lat,
       longitute: lng,
       active: true
@@ -65,12 +69,42 @@ module.exports = function(app) {
       })
   });
 
+  app.post("/api/chatroom", function(req, res) {
+    
+  })
+
+  //Joining an event
+
+  app.post("api/join/:eventname", function(req, res) {
+    db.EventData.count(
+      { where: 
+        {groupsize: req.body.groupsize}
+      }).then(count => {
+        if (count < req.body.active_groupsize) {
+          db.EventData.update(
+            {group_size: req.body.group_size + 1}, 
+            {where: {creator_id: req.params.creatorid}})
+            .then(function(result) {
+              res.json(results);
+            })  
+        }
+        else {
+            res.json({error: "Invalid login"})
+        }
+      })
+
+      // TODO: Make Users joined event list
+
+    });
 
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.UserData.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
+
+  // Delete an event by eventname
+  
+  app.delete("/api/delete/:eventname", function(req, res) {
+    db.UserData.destroy({ where: { eventname: req.params.eventname } })
+    .then(function(results) {
+      res.json(results);
     });
   });
 };
