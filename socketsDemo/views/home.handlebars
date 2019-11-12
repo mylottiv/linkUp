@@ -5,7 +5,9 @@
             <div class='card-content'>
                 <p>
                     <h5>{{roomName}}</h5>
-                    <button type='button' class='btn' id={{roomName}}-join-button>JOIN</button>
+                    <a href='/rooms/{{roomName}}'>
+                        <button type='button' class='btn join-button' id={{roomName}}-join-button>JOIN</button>
+                    </a>
                 </p>
             </div>
         </li>
@@ -17,11 +19,22 @@
             <input class='validate' type='text' name='new-chatroom-name' id='new-chatroom-name'>
             <label class='active' for='new-chatroom-name'>New Chatroom Name</label>
         </div>
-        <button type='submit' class='btn' name='send-button' id='send-button'>SUBMIT</button>
+        <button type='submit' class='btn' name='new-room-button' id='new-room-button'>SUBMIT</button>
     </form>
 </div>
 <script>
     $(function() {
-        console.log('TODO: Post request handling for creating new chatroom')
+        $('#new-room-button').click(function(e) {
+            e.preventDefault();
+            if ($('#new-chatroom-name').val()) 
+            {            
+                const data = {roomName: $('#new-chatroom-name').val(), creator: 'default'};
+                $.post({
+                    url: '/api/rooms',
+                    data: data,
+                    success: (response) => console.log('done', reponse)
+                });
+            }        
+        })
     });
 </script>
