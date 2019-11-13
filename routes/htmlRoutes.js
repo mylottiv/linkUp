@@ -1,6 +1,8 @@
 const db = require("../models");
 const path = require('path')
 
+
+
 module.exports = function(app) {
   //This GET route already exists in the api routes file
   
