@@ -6,65 +6,65 @@
     <meta http-equiv="x-ua-compatible" content="ie-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LinkUP</title>
-    <link rel="stylesheet" type="text/css" href="/public/styles/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="shortcut icon" href="/public/images/logo1.png" type="favicon/ico" />
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+    <link rel="shortcut icon" href="/images/logo1.png" type="favicon/ico" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </head>
 
 <body>
     <div class="logo">
-        <img src="/public/images/logo1.png">
+        <img src="/images/logo1.png">
     </div>
 
     <div class="parallax-container">
-        <div class="parallax"><img src="/public/images/parallax1.jpg"></div>
+        <div class="parallax"><img src="images/parallax1.jpg"></div>
     </div>
-  <div class="section"></div>
-  <main>
-    <center>
-
-    <h5 class="black-text">Please, login into your account</h5>
     <div class="section"></div>
+    <main>
+        <div class='center'>
 
-    <div class="container">
-    <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+            <h5 class="black-text">Please, login into your account</h5>
+            <div class="section"></div>
 
-        <form class="col s12" method="post">
-        <div class='row'>
-            <div class='col s12'>
-            </div>
-        </div>
+            <div class="container">
+                <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-        <div class='row'>
-            <div class='input-field col s12'>
-            <i class="material-icons prefix">person</i>
-            <input class='validate' type='email' name='email' id='email' />
-            <label for='email'>Enter your email</label>
-            </div>
-        </div>
+                    <form class="col s12" method="post">
+                        <div class='row'>
+                            <div class='col s12'>
+                            </div>
+                        </div>
 
-        <div class='row'>
-            <div class='input-field col s12'>
-            <i class="material-icons prefix">lock</i>
-            <input class='validate' type='password' name='password' id='password' />
-            <label for='password'>Enter your password</label>
-            </div>
-            <label style='float: right;'>
-				<a class='pink-text modal-trigger' href='#modal2'><b>Forgot Password?</b></a>
-            </label>
-            <div class="modal" id="modal2">
-                <h5 class="modal-close">&#10005</h5>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <i class="material-icons prefix">person</i>
+                                <input class='validate' type='email' name='email' id='email' />
+                                <label for='email'>Enter your email</label>
+                            </div>
+                        </div>
 
-            <div class="modal-content center">
-                <h4>Forgot Password?</h4><br>
-                <form action="#">
-
-            <div class="input-field">
-                <i class="material-icons prefix">person</i>
-                <input type="text" id="email">
-                <label for="email">Confirm Email</label>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <i class="material-icons prefix">lock</i>
+                                <input class='validate' type='password' name='password' id='password' />
+                                <label for='password'>Enter your password</label>
+                            </div>
+                            <label style='float: right;'>
+                                <a class='pink-text modal-trigger' href='#modal2'><b>Forgot Password?</b></a>
+                            </label>
+                        </div>
+                        <br/>
+                        <div class='row'>
+                            <div class='col s12'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect black'>Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>  
             </div>
                 <br>
 
@@ -100,56 +100,76 @@
             </center>
           </form>
         </div>
-      </div>
-
-      <div class="container center">
-            <a class="waves-effect waves-light btn modal-trigger black" href="#modal1">Create Account</a>
-        </div>
-          
-        <div class="modal" id="modal1">
+       </div>
+    <div class="container center">
+        <a class="waves-effect waves-light btn modal-trigger black" href="#modal1">Create Account</a>
+    </div>
+    <div class="section"></div>
+    <div class="section"></div>
+    </main>
+    <div class="parallax-container">
+        <div class="parallax"><img id='parallax2' src="/images/parallax2.jpg"></div>
+    </div>
+    <div class="modal" id="modal1">
         <h5 class="modal-close">&#10005</h5>
                 
         <div class="modal-content center">
             <h4>Sign Up</h4><br>
             <form action="#">
-          
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="email">
+                    <label for="email">Email</label>
+                </div>
+                <br>
+                <div class="input-field">
+                    <i class="material-icons prefix">lock</i>
+                    <input type="password" id="pass">
+                    <label for="pass">Password</label>
+                </div>
+                <br>    
+                <div class="left" style="margin-left:20px;">
+                    <input type="checkbox" id="check">
+                    <label for="check">Remember Me</label>
+                </div>
+                <br>        
+                <input type="submit" value="Submit" class="btn btn-large black">        
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="modal2">
+            <h5 class="modal-close">&#10005</h5>
+
+        <div class="modal-content">
+            <h4>Forgot Password?</h4><br>
+            <form action="#">
+
         <div class="input-field">
             <i class="material-icons prefix">person</i>
             <input type="text" id="email">
-            <label for="email">Email</label>
+            <label for="email">Confirm Email</label>
         </div>
-                <br>
-          
+            <br>
+
         <div class="input-field">
             <i class="material-icons prefix">lock</i>
             <input type="password" id="pass">
             <label for="pass">Password</label>
         </div>
-                <br>
-          
-        <div class="left" style="margin-left:20px;">
-            <input type="checkbox" id="check">
-            <label for="check">Remember Me</label>
-        </div>
-                <br>
-                
-            <input type="submit" value="Submit" class="btn btn-large black">
-                
-            </form>
-            </div>
-          </div>
-    </center>
 
-    <div class="section"></div>
-    <div class="section"></div>
-  </main>
-  <div class="parallax-container">
-        <div class="parallax"><img src="/public/images/parallax2.jpg"></div>
+            <br>
+
+        </div>
     </div>
 
-  <script src="/public/js/front_index.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!-- <script src="/js/front_index.js"></script> -->
+    <script>
+    $(document).ready(function(){
+        $('.parallax').parallax();
+        $('.modal').modal();
+    });
+    </script>
+
 </body>
 
 </html>

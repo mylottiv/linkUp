@@ -2,7 +2,10 @@ module.exports = function(sequelize, DataTypes) {
     var ChatData = sequelize.define("ChatData", {
       username:DataTypes.TEXT,
       address:DataTypes.STRING,
-      active:DataTypes.BOOLEAN
+      active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      }
     });
     return ChatData;
   };

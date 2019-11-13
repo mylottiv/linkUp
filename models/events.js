@@ -1,16 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
-    var EventData = sequelize.define("EventData", {
-      username:DataTypes.TEXT,
-      address:DataTypes.STRING,
-      city:DataTypes.STRING,
-      state:DataTypes.STRING,
-      zipcode:DataTypes.INTEGER,
-      active: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      eventname:DataTypes.TEXT
-    });
-    return EventData;
-  };
+  const EventData = sequelize.define("EventData", {
+    creator_id:DataTypes.TEXT,
+    eventname:DataTypes.TEXT,
+    address:DataTypes.STRING,
+    placeid:DataTypes.STRING,
+    groupsize:DataTypes.INTEGER,
+    current_groupsize:DataTypes.INTEGER,
+    latitude:DataTypes.FLOAT,
+    longitutde:DataTypes.FLOAT,
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
+  });
+  return EventData;
+};
   
