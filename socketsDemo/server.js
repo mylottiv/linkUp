@@ -31,14 +31,16 @@ const rooms = [
 ]
 
 // Initialize array of roomName objects
-const roomNames = rooms.map(function(room) {
+function getRoomNames(rooms) {
+    return rooms.map(function(room) {
 
-    // Wrap room name inside object and return
-    const name = {};
-    name.roomName = room.roomName
-    return name
+        // Wrap room name inside object and return
+        const name = {};
+        name.roomName = room.roomName
+        return name
 
-});
+    });
+}
 
 // Init Express Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -46,7 +48,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Init routers, passing stored chatroom data
-app.use(require('./routes/viewRoutes.js')(rooms, roomNames));
+app.use('/', require('./routes/viewRoutes.js')(rooms, getRoomNames));
+app.use('/api', require('./routes/apiRoutes.js')(rooms, getRoomNames));
 
 // Init express handlebars engine
 app.engine(
@@ -81,7 +84,7 @@ io.on('connection', function(socket) {
         const {roomName, user, content} = newMessage;
 
         // Add message to relevant chatroom message list
-        rooms[roomNames.indexOf(roomNames.find((name) => name.roomName === roomName))].messages.push({user, content});
+        rooms[getRoomNames(rooms).indexOf(getRoomNames(rooms).find((name) => name.roomName === roomName))].messages.push({user, content});
         
         // Sends new message to all users in room
         io.to(roomName).emit('new message', {user, content});
