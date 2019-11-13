@@ -5,14 +5,17 @@
     <title>Title</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 
     <link rel="shortcut icon" href="../images/logo1.png" type="favicon/ico" />
 
-
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="/public/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
         <!-- jQuery first,  -->
@@ -21,6 +24,10 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places&callback=initMap" async defer></script>
+    <script src="/public/js/front_index.js"></script>
+
+
 
 </head>
 
@@ -63,18 +70,30 @@
                     </li>
                 </ul>
             </nav>
-            <div id="event" class="modal">
-                <div class="modal-content">
-                    <h4>Title</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-                </div>
-            </div>
+        </header>
+    </div>
 
-            <div id="search" class="modal">
-                <div class="modal-content">
-                    <h4>Title</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-                </div>
+    <div style="display: none">
+        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+    </div>
+    <div id="map"></div>
+        <div id="infowindow-content">
+            <span id="place-name" class="title"></span><br>
+            <strong>Place ID:</strong> <span id="place-id"></span><br>
+            <span id="place-address"></span>
+        </div>
+
+    <div id="event" class="modal">
+        <div class="modal-content">
+            <h4>Title</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
+        </div>
+    </div>
+
+    <div id="search" class="modal">
+            <div class="modal-content">
+                <h4>Title</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
             </div>
             
             <div id="profile" class="modal">
