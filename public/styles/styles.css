@@ -10,13 +10,13 @@ body{
 }
 
 .logo img{
-  position: fixed;
-  width: 10%;
-  height: 16%;
-  padding: 1px;
-  margin: 1px;
-  z-index: 1;
-}
+  float: left;
+   width: 10%;
+   height: 10%;
+   padding: 1px;
+   margin: 1px;
+   z-index: 1;
+ }
 
 /* Side navbar css */
 
