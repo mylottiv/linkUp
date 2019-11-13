@@ -5,15 +5,17 @@
     <title>Title</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" href="public/images/logo1.png" type="favicon/ico" />
+    <link rel="shortcut icon" href="/public/images/logo1.png" type="favicon/ico" />
 
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="public/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="/public/styles/styles.css">
 
 </head>
 
@@ -24,7 +26,7 @@
     <div class="container">
         <header>
             <div class="logo">
-                <img src="public/images/logo1.png">
+                <img src="/public/images/logo1.png">
             </div>
 
             <nav class="navbar" id="navID">
@@ -61,6 +63,16 @@
         </header>
     </div>
 
+    <div style="display: none">
+        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+    </div>
+    <div id="map"></div>
+        <div id="infowindow-content">
+            <span id="place-name" class="title"></span><br>
+            <strong>Place ID:</strong> <span id="place-id"></span><br>
+            <span id="place-address"></span>
+        </div>
+
     <div id="event" class="modal">
         <div class="modal-content">
             <h4>Title</h4>
@@ -89,13 +101,17 @@
                     </div>
                 </div>
     <!-- Optional JavaScript -->
+    <script src="/public/js/front_index.js"></script>
     <!-- jQuery first,  -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places&callback=initMap" async defer></script>
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://kit.fontawesome.com/58a179cbad.js" crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function(){
