@@ -5,7 +5,6 @@ module.exports = function(sequelize, DataTypes) {
     address:DataTypes.STRING,
     placeid:DataTypes.STRING,
     groupsize:DataTypes.INTEGER,
-    current_groupsize:DataTypes.INTEGER,
     latitude:DataTypes.FLOAT,
     longitutde:DataTypes.FLOAT,
     active: {
@@ -13,6 +12,13 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: false
     }
   });
+
+  EventData.associate = function(models) {
+    EventData.hasMany(models.ChatData, {
+      onDelete: "cascade"
+    });
+  };
+
   return EventData;
 };
   

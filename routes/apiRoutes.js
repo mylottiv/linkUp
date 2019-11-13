@@ -25,34 +25,43 @@ module.exports = function(app) {
 
   // Create a new example
   app.post("/api/signup", function(req, res) {
-    db.UserData.create({      
-        firstname:req.body.firstname,
-        lastname:req.body.lastname,
-        username:req.body.username,
-        password:req.body.password,
-        email:req.body.email,
-      })
-      .then(function(results) {
-        res.json(results);
-    });
+    db.findOne({where: {username:req.body.username}})
+    .then(function(results) {
+      if(req.body.username) {
+        res.json({status: "Failed", error: "Username already taken."})
+      }
+      else {
+        db.UserData.create({      
+          firstname:req.body.firstname,
+          lastname:req.body.lastname,
+          username:req.body.username,
+          password:req.body.password,
+          email:req.body.email,
+        })
+        .then(function(results) {
+          res.json(results);
+      });
+      }
+    })
   });
 
 
   // Controller for event creation post requests
   app.post("/api/events", function(req, res) {
 
-    const {eventname, creator_id, placeid, location, description} = req.body;
-    const {lat, lng} = location;
+    const {eventname, creator_id, address, placeid, location, description} = req.body;
+    // const {lat, lng} = location;
 
     // Create new event entry in DB
     db.EventData.create({    
       creator_id,
       eventname,
       address,
-      place_id: placeid,
+      groupsize: 1,
+      place_id: 1234,
       description,
-      latitude: lat,
-      longitute: lng,
+      // latitude: lat,
+      // longitute: lng,
       active: true
     })
     .then(function(results) {
@@ -61,20 +70,33 @@ module.exports = function(app) {
     .catch(function(err) {
       console.log(err);
     })
+
+    db.ChatData.create({
+      
+    })
   });
 
   app.post("/api/login", function(req, res) {
-    db.UserData.count({ where: { username: req.body.username, password: req.body.password } })
-    .then(count => {
-      if (count != 0) {
+    db.UserData.findOne({where:{username:req.body.username,password:req.body.password}})
+    .then(function(result){
+      if (req.body.username && req.body.password) {
         //Creates a random token
         let rand = function() {
           return Math.random().toString(36).substr(2); // remove `0.`
         };
         let token = rand();
-        let name = req.body.username;
+        
         //Sets a cookie with logintoken
         res.cookie(logintoken, token);
+
+        let userInfo = {
+          firstname: result.firstname,
+          lastname: result.lastname,
+          username: result.username
+        }
+
+        res.json({userInfo});
+
 
       }
       else {
@@ -83,32 +105,21 @@ module.exports = function(app) {
       })
   });
 
-  app.post("/api/chatroom", function(req, res) {
-
+  app.get("/api/event/:id", function(req, res) {
+    db.EventData.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [db.ChatData]
+    }).then(function(result) {
+      res.json(result);
+    });
   })
 
-  //Joining an event
+  
 
-  app.post("api/join/:eventname", function(req, res) {
-    db.EventData.count(
-      { where: 
-        {groupsize: req.body.groupsize}
-      }).then(count => {
-        if (count < req.body.active_groupsize) {
-          db.EventData.update(
-            {group_size: req.body.group_size + 1}, 
-            {where: {creator_id: req.params.creatorid}})
-            .then(function(result) {
-              res.json(results);
-            })  
-        }
-        else {
-            res.json({error: "Group full!"})
-        }
-      })
-
-      // TODO: Make Users joined event list
-
+  app.post("/api/join/:eventname", function(req, res) {
+    
     });
 
 
