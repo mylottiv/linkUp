@@ -1,7 +1,9 @@
 require("dotenv").config();
+var cookieParser = require('cookie-parser');
 var express = require("express");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
+
 
 var db = require("./models");
 
@@ -9,9 +11,21 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+
+app.use(function(req, res, next) {
+  if(req.cookies.logintoken) {
+    console.log("Cookie valid.");
+    next();
+  }
+  else {
+    res.res.sendFile(path.join(__dirname.replace('routes', 'views') + '\\' + 'login.html'));
+  }
+})
+
 
 // Handlebars
 app.engine(
