@@ -17,17 +17,23 @@ module.exports = function(app) {
 //   });
 // });
 
+  app.get("/api/events", function(req, res) {
+    db.EventData.findAll().then(function(results) {
+      res.json({results});
+    })
+  })
+
   // Create a new example
   app.post("/api/signup", function(req, res) {
     db.UserData.create({      
-      firstname:req.body.firstname,
-      lastname:req.body.lastname,
-      username:req.body.username,
-      password:req.body.password,
-      email:req.body.email,
+        firstname:req.body.firstname,
+        lastname:req.body.lastname,
+        username:req.body.username,
+        password:req.body.password,
+        email:req.body.email,
       })
-      .then(function(dbExample) {
-      res.json(dbExample);
+      .then(function(results) {
+        res.json(results);
     });
   });
 
@@ -61,7 +67,15 @@ module.exports = function(app) {
     db.UserData.count({ where: { username: req.body.username, password: req.body.password } })
     .then(count => {
       if (count != 0) {
-        return res.json({username: req.body.username});
+        //Creates a random token
+        let rand = function() {
+          return Math.random().toString(36).substr(2); // remove `0.`
+        };
+        let token = rand();
+        let name = req.body.username;
+        //Sets a cookie with logintoken
+        res.cookie(logintoken, token);
+
       }
       else {
         return res.json({error: "Invalid login"})
@@ -70,7 +84,7 @@ module.exports = function(app) {
   });
 
   app.post("/api/chatroom", function(req, res) {
-    
+
   })
 
   //Joining an event
@@ -89,7 +103,7 @@ module.exports = function(app) {
             })  
         }
         else {
-            res.json({error: "Invalid login"})
+            res.json({error: "Group full!"})
         }
       })
 
