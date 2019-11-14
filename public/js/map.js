@@ -5,8 +5,9 @@ $(() => {
     zoom: 13
   });
 
-  var input = document.getElementById('pac-input');
 
+  // Bind autocomplete functionality to place search bar
+  var input = document.getElementById('pac-input');
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
 
@@ -15,14 +16,15 @@ $(() => {
 
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+  // Client side events object
   const events = {
     markers: [],
     infowindows: []
   }
+
   // Initialize Event Markers and Infowindows
   $('.event-infowindow').each(function(index, elem) {
     let infowindow = new google.maps.InfoWindow();
-    console.log('porblem?')
     let infowindowContent = elem;
     infowindow.setContent(infowindowContent);
     console.log(infowindow.content);
@@ -35,12 +37,12 @@ $(() => {
     });
     console.log($(this).children('.place-id').attr('data-placeid'));
     console.log($(this).attr('data-latitude'), $(this).attr('data-longitude'));
+
     // Set the position of the marker using the place ID and location.
     marker.setPlace({
       placeId: $(this).children('.place-id').attr('data-placeid'),
       location: new google.maps.LatLng(parseFloat($(this).attr('data-latitude')), parseFloat($(this).attr('data-longitude')))
     });
-
     marker.setVisible(true);
     events.markers.push(marker);
   });
@@ -48,7 +50,6 @@ $(() => {
 
 
   autocomplete.addListener('place_changed', function() {
-    // infowindow.close();
 
     var place = autocomplete.getPlace();
 
@@ -56,7 +57,10 @@ $(() => {
       return;
     }
 
-    // Once a place is selected, AJAX POST request for new event
+    // Close previous infowindow
+    events.infowindows[events.infowindows.length-1].close();
+
+    // Once a place is selected, send API POST request to create new event
     let eventname = place.name;
     let address = place.formatted_address;
     let placeid = place.place_id;
@@ -84,15 +88,12 @@ $(() => {
         map.setZoom(17);
       };
       console.log('keep going');
-      // Create new infowindow html element
+
       // Find index of last event
       let index = events.markers.length + 1;
       console.log(index);
-      let eventname = place.name;
-      let address = place.formatted_address;
-      let placeid = place.place_id;
-      let lat =  place.geometry.location.lat();
-      let lng = place.geometry.location.lng();
+
+      // Create new infowindow html element (Note: this element isn't actually rendered)
       $('#event-infowindow-contents').append(function() {
         return $.parseHTML(
         `<div data-latitude=${lat} data-longitude=${lng} data-id=${index} id="${index}-infowindow-content" class='event-infowindow'>
@@ -103,6 +104,8 @@ $(() => {
         );
       });
       console.log('and going');
+
+      // Use html element appended above as element to set infowindow content
       let infowindow = new google.maps.InfoWindow();
       let infowindowContent = $(`#${index}-infowindow-content`)[0];
       infowindow.setContent(infowindowContent);
@@ -123,9 +126,6 @@ $(() => {
       marker.setVisible(true);
       events.markers.push(marker);
 
-      // infowindowContent.children['place-name'].textContent = place.name;
-      // infowindowContent.children['place-id'].textContent = place.place_id;
-      // infowindowContent.children['place-address'].textContent = place.formatted_address;
       infowindow.open(map, marker);
     });
   });
