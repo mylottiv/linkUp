@@ -28,6 +28,16 @@ module.exports = function(app) {
     //   });
     // });
   });
+  
+  app.get("/events/:id", function(req, res) {
+    db.EventData.findAll({where: { id: req.params.id } }).then(function(events) {
+      console.log('results', events[0].dataValues);
+      res.render("chat", events[0].dataValues);
+    });
+    // Find the one event
+    // Send its parameters as an object along with a chat.handlebars view
+    // Will render the live chatroom for that route
+  });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
