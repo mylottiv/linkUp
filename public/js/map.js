@@ -86,9 +86,8 @@ $(() => {
       console.log('keep going');
       // Create new infowindow html element
       // Find index of last event
-      let index = parseInt($('.event-infowindow').last().attr('data-id')) + 1;
+      let index = events.markers.length + 1;
       console.log(index);
-      console.log(parseInt($('.event-infowindow').last().attr('data-id')) + 1);
       let eventname = place.name;
       let address = place.formatted_address;
       let placeid = place.place_id;
@@ -103,9 +102,7 @@ $(() => {
         </div>`
         );
       });
-      $('#event-infowindow-contents').hide().show(0);
       console.log('and going');
-      console.log($(`#${index}-infowindow-content`).html());
       let infowindow = new google.maps.InfoWindow();
       let infowindowContent = $(`#${index}-infowindow-content`)[0];
       infowindow.setContent(infowindowContent);
