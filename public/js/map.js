@@ -120,51 +120,50 @@ $(() => {
             map.setZoom(17);
           };
         });
+      });
+      // Socket listener for new events
+      socket.on('new event', function(newEvent) {
 
-        // Socket listener for new events
-        socket.on('new event', function(newEvent) {
+        console.log('newEvent', newEvent)
+        // Find index of last event
+        let index = events.markers.length + 1;
+        console.log(index);
 
-          console.log('newEvent', newEvent)
-          // Find index of last event
-          let index = events.markers.length + 1;
-          console.log(index);
-
-          // Create new infowindow html element (Note: this element isn't actually rendered)
-          $('#event-infowindow-contents').append(function() {
-            return $.parseHTML(
-            `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-id=${index} id="${index}-infowindow-content" class='event-infowindow'>
-              <span class="place-name" class="title" data-eventname="${newEvent.eventname}">${newEvent.eventname}</span><br>
-              <strong>Place ID:</strong> <span class="place-id" data-placeid="${newEvent.placeid}">${newEvent.placeid}</span><br>
-              <span class="place-address" data-address="${newEvent.address}">${newEvent.address}</span><br>
-              <span><a href='/events/${index}'>Join Live Chatroom!</a></span>
-            </div>`
-            );
-          });
-          console.log('and going');
-
-          // Use html element appended above as element to set infowindow content
-          let infowindow = new google.maps.InfoWindow();
-          let infowindowContent = $(`#${index}-infowindow-content`)[0];
-          infowindow.setContent(infowindowContent);
-          events.infowindows.push(infowindow);
-      
-          let marker = new google.maps.Marker({map: map});
-      
-          marker.addListener('click', function() {
-            events.infowindows[events.infowindows.length-1].open(map, marker);
-          });
-
-          // Set the position of the marker using the place ID and location.
-          marker.setPlace({
-            placeId: newEvent.placeid,
-            location: {lat: parseFloat(newEvent.latitude), lng: parseFloat(newEvent.longitude)}
-          });
-
-          marker.setVisible(true);
-          events.markers.push(marker);
-
-          // infowindow.open(map, marker);
+        // Create new infowindow html element (Note: this element isn't actually rendered)
+        $('#event-infowindow-contents').append(function() {
+          return $.parseHTML(
+          `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-id=${index} id="${index}-infowindow-content" class='event-infowindow'>
+            <span class="place-name" class="title" data-eventname="${newEvent.eventname}">${newEvent.eventname}</span><br>
+            <strong>Place ID:</strong> <span class="place-id" data-placeid="${newEvent.placeid}">${newEvent.placeid}</span><br>
+            <span class="place-address" data-address="${newEvent.address}">${newEvent.address}</span><br>
+            <span><a href='/events/${index}'>Join Live Chatroom!</a></span>
+          </div>`
+          );
         });
+        console.log('and going');
+
+        // Use html element appended above as element to set infowindow content
+        let infowindow = new google.maps.InfoWindow();
+        let infowindowContent = $(`#${index}-infowindow-content`)[0];
+        infowindow.setContent(infowindowContent);
+        events.infowindows.push(infowindow);
+    
+        let marker = new google.maps.Marker({map: map});
+    
+        marker.addListener('click', function() {
+          events.infowindows[events.infowindows.length-1].open(map, marker);
+        });
+
+        // Set the position of the marker using the place ID and location.
+        marker.setPlace({
+          placeId: newEvent.placeid,
+          location: {lat: parseFloat(newEvent.latitude), lng: parseFloat(newEvent.longitude)}
+        });
+
+        marker.setVisible(true);
+        events.markers.push(marker);
+
+        // infowindow.open(map, marker);
       });
     });
   }
