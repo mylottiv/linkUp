@@ -8,13 +8,11 @@ module.exports = function(app) {
   
   // Load index page
   app.get("/", function(req, res) {
-    res.render("index");
-    // db.UserData.findAll({}).then(function(dbExamples) {
-    //   res.render("index", {
-    //     msg: "Welcome!",
-    //     examples: dbExamples
-    //   });
-    // });
+    // res.render("index");
+    db.EventData.findAll({}).then(function(events) {
+      console.log(events);
+      res.render("index", {events});
+    });
   });
 
   // Login page get route

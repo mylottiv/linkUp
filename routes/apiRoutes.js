@@ -49,19 +49,24 @@ module.exports = function(app) {
   // Controller for event creation post requests
   app.post("/api/events", function(req, res) {
 
-    const {eventname, creator_id, address, placeid, location, description} = req.body;
-    // const {lat, lng} = location;
+    // const {eventname, creator_id, placeid, location, description} = req.body;
+    const {eventname, address, placeid, lat, lng} = req.body;
+
+    console.log('eventname', eventname, 'address', address, 'placeid:', placeid, 'lat:', lat, 'lng', lng);
+
+    // res.json({eventname, address, placeid, lat, lng})
 
     // Create new event entry in DB
     db.EventData.create({    
-      creator_id,
+      creator_id: '1',
       eventname,
       address,
-      groupsize: 1,
-      place_id: 1234,
-      description,
-      // latitude: lat,
-      // longitute: lng,
+      placeid: placeid,
+      groupsize: 5,
+      description: 'Defacto',
+      current_groupsize: 1,
+      latitude: lat,
+      longitude: lng,
       active: true
     })
     .then(function(results) {
