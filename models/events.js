@@ -14,6 +14,13 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: false
     }
   });
+
+  EventData.associate = function(models) {
+    EventData.hasMany(models.ChatData, {
+      onDelete: "cascade"
+    });
+  };
+
   return EventData;
 };
   
