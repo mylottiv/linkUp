@@ -19,14 +19,13 @@
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
         <!-- jQuery first,  -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js">
     </script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places&callback=initMap" async defer></script>
-    <script src="../js/front_index.js"></script>
-    <script src="../js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places" async defer></script>
+    {{!-- <script src="/js/front_index.js"></script> --}}
 
 
 
@@ -74,16 +73,6 @@
         </header>
     </div>
 
-    <div style="display: none">
-        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
-    </div>
-    <div id="map"></div>
-        <div id="infowindow-content">
-            <span id="place-name" class="title"></span><br>
-            <strong>Place ID:</strong> <span id="place-id"></span><br>
-            <span id="place-address"></span>
-        </div>
-
     <div id="event" class="modal">
         <div class="modal-content">
             <h4>Title</h4>
@@ -92,26 +81,26 @@
     </div>
 
     <div id="search" class="modal">
+        <div class="modal-content">
+            <h4>Title</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
+        </div>
+        
+        <div id="profile" class="modal">
             <div class="modal-content">
                 <h4>Title</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
             </div>
-            
-            <div id="profile" class="modal">
-                <div class="modal-content">
-                    <h4>Title</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-                </div>
-            </div>
+        </div>
 
-            <div id="messages" class="modal">
-                <div class="modal-content">
-                    <h4>Title</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-                </div>
+        <div id="messages" class="modal">
+            <div class="modal-content">
+                <h4>Title</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
             </div>
-        </header>
-        {{{body}}}
+        </div>
+    </div>
+    {{{body}}}
     <!-- Optional JavaScript -->
     <script>
         $(document).ready(function(){

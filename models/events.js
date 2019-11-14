@@ -5,9 +5,10 @@ module.exports = function(sequelize, DataTypes) {
     address:DataTypes.STRING,
     placeid:DataTypes.STRING,
     groupsize:DataTypes.INTEGER,
+    description:DataTypes.STRING,
     current_groupsize:DataTypes.INTEGER,
     latitude:DataTypes.FLOAT,
-    longitutde:DataTypes.FLOAT,
+    longitude:DataTypes.FLOAT,
     active: {
       type: DataTypes.BOOLEAN,
       defaultValue: false

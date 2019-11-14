@@ -1,9 +1,14 @@
-<div class="row">
-
-  <div class="map">
-      <iframe width="100%" height="550" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJt8-EJZu1RIYR3iFKF0_uMYE&key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk" allowfullscreen></iframe>  
-  </div>
-  <div class="footer">
-
-  </div>
+<div style="display: none">
+  <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
 </div>
+<div id="map"></div>
+<div id='event-infowindow-contents'>
+  {{#each events}}
+  <div data-latitude={{latitude}} data-longitude={{longitude}} data-id={{id}} id="{{id}}-infowindow-content" class='event-infowindow'>
+    <span class="place-name" class="title" data-eventname="{{eventname}}">{{eventname}}</span><br>
+    <strong>Place ID:</strong> <span class="place-id" data-placeid={{placeid}}>{{placeid}}</span><br>
+    <span class="place-address" data-address="{{address}}">{{address}}</span>
+  </div>
+  {{/each}}
+</div>
+<script src='/js/map.js'></script>
