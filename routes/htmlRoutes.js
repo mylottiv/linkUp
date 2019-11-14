@@ -17,7 +17,7 @@ module.exports = function(app) {
 
   // Login page get route
   app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname.replace('routes', 'views') + '\\' + 'login.html'));
+    res.redirect("../login");
   });
 
   // Load example page and pass in an example by id
