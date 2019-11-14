@@ -9,7 +9,7 @@ const db = require("../models");
 //   Promise: Promise
 // });
 
-module.exports = function(app) {
+module.exports = function(app, io) {
 //   // Get all examples
 //   app.get("/", function(req, res) {
 //     db.EventData.findAll().then(function(result) {
@@ -70,15 +70,16 @@ module.exports = function(app) {
       active: true
     })
     .then(function(results) {
-      res.json(results);
+      io.sockets.emit('new event', results);
+      res.status(202);
     })
     .catch(function(err) {
       console.log(err);
     })
 
-    db.ChatData.create({
+    // db.ChatData.create({
       
-    })
+    // })
   });
 
   app.post("/api/login", function(req, res) {
@@ -115,7 +116,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       },
-      include: [db.ChatData]
+      // include: [db.ChatData]
     }).then(function(result) {
       res.json(result);
     });

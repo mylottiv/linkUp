@@ -3,13 +3,19 @@ var cookieParser = require('cookie-parser');
 var express = require("express");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
+var app = express();
+var PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, function() {
+  console.log(
+    "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+    PORT,
+    PORT
+  );
+const io = require('socket.io').listen(server);
 
 
 
 var db = require("./models");
-
-var app = express();
-var PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cookieParser());
@@ -39,7 +45,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
+require("./routes/apiRoutes")(app, io);
 require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: false };
@@ -52,12 +58,51 @@ if (process.env.NODE_ENV === "test") {
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
-    console.log(
-      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-      PORT,
-      PORT
-    );
+
+  server;
+
+  // Establish socket.io server connection
+  io.on('connection', function(socket) {
+
+    console.log('Socket connected:');
+
+    // Join handler for user connection to specific chat rooms
+    socket.on('join', function(room) {
+
+        // Connect user socket to room
+        socket.join(room);
+
+        console.log('Socket joined room:', room);
+
+    })
+
+    // Event handler for new messages
+    socket.on('new message', function(newMessage) {
+
+        console.log('New Socket Message', newMessage);
+
+        // Destructure message data
+        const {roomName, user, content} = newMessage;
+
+        // Add message to relevant chatroom message list
+        // rooms[getRoomNames(rooms).indexOf(getRoomNames(rooms).find((name) => name.roomName === roomName))].messages.push({user, content});
+        
+        // Sends new message to all users in room
+        io.to(roomName).emit('new message', {user, content});
+    });
+
+    // Event handler for a currently typing user
+    socket.on('typing', function(data) {
+        const {user, roomName} = data;
+        console.log(user, 'is currently typing');
+        socket.to(roomName).emit('typing', user);
+    })
+
+    socket.on('disconnect', function() {
+        console.log('Socket disconnected');
+        socket.leaveAll();
+    })
+  });
   });
 });
 
