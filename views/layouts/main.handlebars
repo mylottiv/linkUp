@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="/public/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
         <!-- jQuery first,  -->
@@ -34,12 +33,12 @@
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
         <header>
             <div class="logo">
                 <img src="../images/logo1.png">
             </div>
-
+            <div class="container">
             <nav class="navbar" id="navID">
                 <button onclick="myFunc(this)" class="toggle-collapse" id="toggle-button">
                     <span class="toggle-icon"></span>
@@ -71,6 +70,7 @@
                     </li>
                 </ul>
             </nav>
+            </div>
         </header>
     </div>
 
@@ -136,6 +136,7 @@
             $('.modal').modal();
         });
     </script>
+    <script>"../js/front_index.js"</script>
 
 </body>
 
