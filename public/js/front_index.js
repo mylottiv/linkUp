@@ -101,7 +101,7 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 function myFunc(e){
   e.classList.toggle("show");
 
-  var elem = document.getElementById("navID"),
+var elem = document.getElementById("navID"),
   style = window.getComputedStyle(elem),
   top = style.getPropertyValue("right");
 
