@@ -77,7 +77,7 @@ function initMap(center) {
       let infowindow = new google.maps.InfoWindow();
 
       // Rather than the actual template element, instead passes an HTML string without the "hide" class
-      let infowindowContent = elem.innerHTML.replace(' hide', '');
+      let infowindowContent = elem.innerHTML.replace(' hide', '').replace('-template', '');
 
       // setContent will create a new DOM element based on the html passed to it
       infowindow.setContent(infowindowContent);
@@ -141,39 +141,38 @@ function initMap(center) {
           lat,
           lng
         },
-      }).then(function(results) {
+        success: (results) => {
 
-        // Server POST route should return a 202 status. 
-        console.log(results);
+          // NOTE: THIS AND ERROR BLOCK ARE NOT FIRING CURRENTLY
 
-        // For the client who created the new event, map will recenter onto event
-        if (place.geometry.viewport) {
-          map.fitBounds(place.geometry.viewport);
-        } else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(17);
-        };
+          // Server POST route should return a 202 status. 
+          console.log('line 149 results', results, results.status);
 
-      }).catch((err) => console.log(err));
+          // For the client who created the new event, map will recenter onto event
+          map.setCenter({lat, lng});
+          map.setZoom(15);
+
+        },
+        error: (err) => console.log(err)
+      });
     });
-
+    
     // Socket event listener for new events (I'm seeing a potential namespace problem here)
     socket.on('new event', function(newEvent) {
 
       console.log('newEvent', newEvent)
 
-      // Index of new event will be the same integer as the length of the existing event markers array
-      let index = events.markers.length;
-      console.log('index', index);
+      // Capture new event id
+      let id = newEvent.id;
 
       // Create new infowindow html element (Note: this element isn't actually rendered)
       $('#event-infowindow-content-templates').append(function() {
         return $.parseHTML(
-        `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-id=${index} id="${index}-infowindow-content" class='event-infowindow hide'>
+        `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-id=${id} id="${id}-infowindow-content-template" class='event-infowindow hide'>
           <span class="place-name" class="title" data-eventname="${newEvent.eventname}">${newEvent.eventname}</span><br>
           <strong>Place ID:</strong> <span class="place-id" data-placeid="${newEvent.placeid}">${newEvent.placeid}</span><br>
           <span class="place-address" data-address="${newEvent.address}">${newEvent.address}</span><br>
-          <span><a href='/events/${index}'>Join Live Chatroom!</a></span>
+          <span><a href='/events/${id}'>Join Live Chatroom!</a></span>
         </div>`
         );
       });
@@ -182,9 +181,9 @@ function initMap(center) {
       // Use html element appended above as template to set infowindow content
       let infowindow = new google.maps.InfoWindow();
 
-      // Again using an HTML string rather than actual HTML element with "hide" class removed
+      // Again using an HTML string rather than actual HTML element with "hide" class and '-template' id identifier removed
       // Surely there is a cleaner and more logical way of delivering storing and rendering event infowindows...
-      let infowindowContent = $(`#${index}-infowindow-content`)[0].innerHTML.replace(' hide', '');
+      let infowindowContent = $(`#${id}-infowindow-content-template`)[0].innerHTML.replace(' hide', '').replace('-template', '');
       infowindow.setContent(infowindowContent);
       events.infowindows.push(infowindow);
   
@@ -194,7 +193,9 @@ function initMap(center) {
 
         // Close all infowindows then open the infowindow for the new event
         events.infowindows.forEach((window) => window.close());
-        events.infowindows[index].open(map, marker);
+
+        // Index of new event is the id of the new event minus 1
+        events.infowindows[id-1].open(map, marker);
 
       });
 
@@ -204,12 +205,13 @@ function initMap(center) {
         location: {lat: parseFloat(newEvent.latitude), lng: parseFloat(newEvent.longitude)}
       });
 
-      // Set marker visible on map
+      // Set marker visible on map and fire click event for it
       marker.setVisible(true);
+      google.maps.event.trigger(marker, 'click');
 
       // Push to markers array in events object
       events.markers.push(marker);
 
     });
   });
-};
+}
