@@ -71,7 +71,9 @@ module.exports = function(app, io) {
     })
     .then(function(results) {
       io.sockets.emit('new event', results);
-      res.status(202);
+
+      // Send a 201 'Created' status back to the client
+      res.status(201);
     })
     .catch(function(err) {
       console.log(err);
