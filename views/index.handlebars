@@ -2,9 +2,9 @@
   <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
 </div>
 <div id="map"></div>
-<div id='event-infowindow-contents'>
+<div id='event-infowindow-content-templates'>
   {{#each events}}
-  <div data-latitude={{latitude}} data-longitude={{longitude}} data-id={{id}} id="{{id}}-infowindow-content" class='event-infowindow'>
+  <div data-latitude={{latitude}} data-longitude={{longitude}} data-id={{id}} id="{{id}}-infowindow-content" class='event-infowindow hide'>
     <span class="place-name" class="title" data-eventname="{{eventname}}">{{eventname}}</span><br>
     <strong>Place ID:</strong> <span class="place-id" data-placeid={{placeid}}>{{placeid}}</span><br>
     <span class="place-address" data-address="{{address}}">{{address}}</span><br>
