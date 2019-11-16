@@ -39,6 +39,12 @@ body{
   justify-content: space-between;
 }
 
+#pac-input {
+  background-color: white;
+  margin-top: 10px;
+  width: 50%;
+}
+
 .nav-item{
   display: flex;
   display: inline;
