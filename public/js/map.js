@@ -156,7 +156,7 @@ function initMap(center) {
         error: (err) => console.log(err)
       });
     });
-    
+
     // Socket event listener for new events (I'm seeing a potential namespace problem here)
     socket.on('new event', function(newEvent) {
 
@@ -207,6 +207,8 @@ function initMap(center) {
 
       // Set marker visible on map and fire click event for it
       marker.setVisible(true);
+
+      // TODO: Have this only fire for the creator of event
       google.maps.event.trigger(marker, 'click');
 
       // Push to markers array in events object
