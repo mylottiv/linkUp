@@ -15,14 +15,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
-        <!-- jQuery first,  -->
+    <!-- jQuery first,  -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js">
     </script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places" async defer></script>
 
     <!-- Import socket.io client library -->
@@ -40,7 +43,7 @@
             </div>
             <div class="container">
             <nav class="navbar" id="navID">
-                <button onclick="myFunc(this)" class="toggle-collapse" id="toggle-button">
+                <button class="toggle-collapse" id="toggle-button">
                     <span class="toggle-icon"></span>
                 </button>
 
@@ -133,10 +136,28 @@
     <!-- Optional JavaScript -->
     <script>
         $(document).ready(function(){
+
+            // Initializes modals
             $('.modal').modal();
+
+            // Sets listener for navbar toggle button
+            $('#toggle-button').click(function(e) {
+                e.preventDefault();
+
+                // Moves navbar in or out depending on current position
+                var elem = document.getElementById("navID"),
+                style = window.getComputedStyle(elem),
+                top = style.getPropertyValue("right");
+
+                if (top == "0px"){
+                    elem.style.right = "-260px";
+                } else{
+                    elem.style.right = "0px";
+                }
+            });
         });
     </script>
-    <script src="../js/front_index.js"></script>
+    {{!-- <script src="../js/front_index.js"></script> --}}
 
 </body>
 
