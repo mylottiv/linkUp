@@ -53,17 +53,6 @@ function initMap(center) {
       zoom: 13
     });
 
-
-    // Bind autocomplete functionality to places search bar
-    var input = document.getElementById('pac-input');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo('bounds', map);
-
-    // Specify just the place data fields that you need.
-    autocomplete.setFields(['place_id', 'geometry', 'name', 'formatted_address']);
-
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
     // Client side events object with arrays for event markers and respective infowindows
     const events = {
       markers: [],
@@ -107,54 +96,6 @@ function initMap(center) {
       // Place marker on map and add to array
       marker.setVisible(true);
       events.markers.push(marker);
-    });
-
-    // Listener is triggered every time a character changes in the autocomplete form
-    autocomplete.addListener('place_changed', function() {
-
-      var place = autocomplete.getPlace();
-      
-      // Checks if an actual place has been selected with this character change
-      if (!place.geometry) {
-
-        // If no place selected, return out of callback
-        return;
-      }
-
-      // Once a place is selected, capture relevant fields
-      let eventname = place.name;
-      let address = place.formatted_address;
-      let placeid = place.place_id;
-      let lat =  place.geometry.location.lat();
-      let lng = place.geometry.location.lng();
-      console.log('place', placeid);
-      console.log(lat);
-      console.log(lng);
-
-      // Send new place data as API POST request to server
-      $.post({
-        url: '/api/events',
-        data: {
-          eventname,
-          address,
-          placeid,
-          lat,
-          lng
-        },
-        success: (results) => {
-
-          // NOTE: THIS AND ERROR BLOCK ARE NOT FIRING CURRENTLY
-
-          // Server POST route should return a 202 status. 
-          console.log('line 149 results', results, results.status);
-
-          // For the client who created the new event, map will recenter onto event
-          map.setCenter({lat, lng});
-          map.setZoom(15);
-
-        },
-        error: (err) => console.log(err)
-      });
     });
 
     // Socket event listener for new events (I'm seeing a potential namespace problem here)
