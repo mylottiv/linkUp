@@ -233,3 +233,7 @@ input[type="submit"]{
 #map #infowindow-content {
   display: inline;
 }
+
+.pac-container {
+  z-index: 1005;
+}

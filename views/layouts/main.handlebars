@@ -92,7 +92,7 @@
 
         <div class="input-field">
             <i class="material-icons prefix">location_on</i>
-                <input id="autocomplete" placeholder="Enter event address" onFocus="geolocate()" type="text"/>
+                <input id="place-autocomplete-input" placeholder="Enter event address" type="text"/>
         </div>
             </form>
                 
@@ -133,30 +133,7 @@
         </div>
     </div>
     {{{body}}}
-    <!-- Optional JavaScript -->
-    <script>
-        $(document).ready(function(){
-
-            // Initializes modals
-            $('.modal').modal();
-
-            // Sets listener for navbar toggle button
-            $('#toggle-button').click(function(e) {
-                e.preventDefault();
-
-                // Moves navbar in or out depending on current position
-                var elem = document.getElementById("navID"),
-                style = window.getComputedStyle(elem),
-                top = style.getPropertyValue("right");
-
-                if (top == "0px"){
-                    elem.style.right = "-260px";
-                } else{
-                    elem.style.right = "0px";
-                }
-            });
-        });
-    </script>
+    <script src='../js/index.js'></script>
 </body>
 
 </html>
