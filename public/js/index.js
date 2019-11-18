@@ -26,10 +26,14 @@ $(document).ready(function(){
     // Specify just the place data fields that you need.
     autocomplete.setFields(['place_id', 'geometry', 'name', 'formatted_address']);
 
+    // Initialize container for place results from place autocomplete
+    // It's outside of the 'place_changed' handler so that we can access the place data when submitting the whole form
+    let eventPlace;
+
     // Listener is triggered every time a character changes in the autocomplete form
     autocomplete.addListener('place_changed', function() {
 
-        var place = autocomplete.getPlace();
+        let place = autocomplete.getPlace();
         
         // Checks if an actual place has been selected with this character change
         if (!place.geometry) {
@@ -38,40 +42,57 @@ $(document).ready(function(){
             return;
         }
 
-        // Once a place is selected, capture relevant fields
-        let eventname = place.name;
-        let address = place.formatted_address;
-        let placeid = place.place_id;
-        let lat =  place.geometry.location.lat();
-        let lng = place.geometry.location.lng();
+        // If a place has been selected then save in eventPlace
+        else {
+            eventPlace = place;
+        }
+    });
+
+    $('#create-event-form').submit(function(e) {
+
+        // Prevent page refresh
+        e.preventDefault();
+
+        // Once a place is selected, capture relevant fields, mostly from eventPlace
+        let eventname = ($('#event-name').val() !== '') ? $('#event-name').val() : eventPlace.name;
+        let address = eventPlace.formatted_address;
+        let placeid = eventPlace.place_id;
+        let description = $('#event-description').val();
+        let lat =  eventPlace.geometry.location.lat();
+        let lng = eventPlace.geometry.location.lng();
+        console.log('name', eventname)
         console.log('place', placeid);
         console.log(lat);
         console.log(lng);
 
         // Send new place data as API POST request to server
         $.post({
-            url: '/api/events',
-            data: 
-            {
+            url: '/api/events', 
+            data: {
                 eventname,
                 address,
                 placeid,
+                description,
                 lat,
                 lng
             },
-            success: (results) => {
+        }).done((results) => {
 
-                // NOTE: THIS AND ERROR BLOCK ARE NOT FIRING CURRENTLY
+            // Clear input fields and close modal
+            $('#event-name').val('');
+            $('#event-description').val('');
+            $('#place-autocomplete-input').val('');
+            $('#create-event-form').modal();
 
-                // Server POST route should return a 202 status. 
-                console.log('POST resolution results', results, results.status);
+            // Server POST route should return a 201 status. 
+            console.log('POST resolution results', results, results.status);
 
-                // For the client who created the new event, map will recenter onto event
-                map.setCenter({lat, lng});
-                map.setZoom(15);
-
-                },
-            error: (err) => console.log(err)
-        });
+            // For the client who created the new event, map will recenter onto event
+            // Need to find a way to hoist the map, basically. Might be as simple as making a new function for this code
+            // if (map) {
+            //     map.setCenter({lat, lng});
+            //     map.setZoom(15);
+            // }
+        }).catch((err) => console.log(err));
     });
 });

@@ -31,6 +31,8 @@
     <!-- Import socket.io client library -->
     <script src='/socket.io/socket.io.js'></script>
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
 </head>
 
@@ -52,7 +54,7 @@
                         <a href="#" class="site-name">LinkUP</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#event" class="nav-link modal-trigger">Create Event</a>
+                        <a href="#create-event-form" class="nav-link modal-trigger">Create Event</a>
                     </li>
                     <li class="nav-item">
                         <a href="#search" class="nav-link modal-trigger">Search Event</a>
@@ -77,23 +79,39 @@
         </header>
     </div>
 
-    <div id="event" class="modal">
+    <div id="create-event-form" class="modal">
         <h5 class="modal-close">&#10005</h5>
         <div class="modal-content center">
             <h4>Create Event</h4>
             <form action="#">
-
-        <div class="input-field">
-            <i class="material-icons prefix">event</i>
-            <input type="text" id="event-name">
-            <label for="event-name">Enter event title</label>
-        </div>
+        
+                <div class="input-field">
+                    <i class="material-icons">event</i>
+                    <input type="text" id="event-name">
+                    <label for="event-name">Name your Event</label>
+                </div>
                 <br>
 
-        <div class="input-field">
-            <i class="material-icons prefix">location_on</i>
-                <input id="place-autocomplete-input" placeholder="Enter event address" type="text"/>
-        </div>
+                <div class='input-field'>
+                    <i class='material-icons'>description</i>
+                    <input type='text' id='event-description' class='active'>
+                    <label for='event-description'>Add a description</label>
+                </div>
+                <br>
+
+                <div class="input-field">
+                    <i class="material-icons">location_on</i>
+                    <input id="place-autocomplete-input" class='active' placeholder='' type="text"/>
+                    <label for="place-autocomplete-input" class='active'>Enter event address</label>
+                </div>
+                <br>
+
+                <div class='row'>
+                    <button class='btn-large black' type='submit' name='action'>Create Event!
+                        <i class='material-icons right'>send</i>
+                    </button>
+                </div>
+
             </form>
                 
         </div>
@@ -135,5 +153,4 @@
     {{{body}}}
     <script src='../js/index.js'></script>
 </body>
-
 </html>
