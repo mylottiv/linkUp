@@ -15,11 +15,11 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  // EventData.associate = function(models) {
-  //   EventData.hasMany(models.ChatData, {
-  //     onDelete: "cascade"
-  //   });
-  // };
+  EventData.associate = function(models) {
+    EventData.hasMany(models.ChatData, {
+      onDelete: "cascade"
+    });
+  };
 
   return EventData;
 };
