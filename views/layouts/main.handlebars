@@ -14,6 +14,8 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
@@ -62,17 +64,9 @@
                     <li class="nav-item">
                         <a href="#profile" class="nav-link modal-trigger">Profile</a>
                     </li>
-                    <li class="nav-item">
+                    {{!-- <li class="nav-item">
                         <a href="#messages" class="nav-link modal-trigger">Messages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fab fa-facebook-f"></i>
-                            <i class="fab fa-twitter"></i>
-                            <i class="fab fa-instagram"></i>
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </nav>
             </div>
@@ -107,11 +101,10 @@
                 <br>
 
                 <div class='row'>
-                    <button class='btn-large black' type='submit' name='action'>Create Event!
+                    <button class='btn-large black waves-effect waves-light' type='submit' name='action' id="submit-event-button">Create Event!
                         <i class='material-icons right'>send</i>
                     </button>
                 </div>
-
             </form>
                 
         </div>
@@ -123,7 +116,7 @@
             <h4>Search for Events</h4>
             <form action="#">
                 <div class="input-field">           
-
+                    under construction...
                 </div>
             </form>
                 
@@ -133,22 +126,22 @@
     <div id="profile" class="modal">
         <h5 class="modal-close">&#10005</h5>
         <div class="modal-content center">
-            <h4>All about you</h4>
+            <h4>All About You</h4>
             <form action="#">
                 <div class="input-field">
-
+                    under construction...
                 </div>
             </form>
 
         </div>
     </div>
 
-        <div id="messages" class="modal">
+        {{!-- <div id="messages" class="modal">
             <div class="modal-content">
                 <h4>Title</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
             </div>
-        </div>
+        </div> --}}
     </div>
     {{{body}}}
     <script src='../js/index.js'></script>

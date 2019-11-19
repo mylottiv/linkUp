@@ -8,14 +8,14 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
 
-    // ChatData.associate = function(models) {
+    ChatData.associate = function(models) {
 
-    //   ChatData.belongsTo(models.EventData, {
-    //     foreignKey: {
-    //       allowNull: false
-    //     }
-    //   });
-    // };
+      ChatData.belongsTo(models.EventData, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
+    };
 
     return ChatData;
   };

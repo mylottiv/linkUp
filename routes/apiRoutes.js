@@ -17,6 +17,7 @@ module.exports = function(app, io) {
 //   });
 // });
 
+  //Get all events for map population
   app.get("/api/events", function(req, res) {
     db.EventData.findAll().then(function(results) {
       res.json({results});
@@ -56,6 +57,7 @@ module.exports = function(app, io) {
 
     // res.json({eventname, address, placeid, lat, lng})
 
+
     // Create new event entry in DB
     db.EventData.create({    
       creator_id: '1',
@@ -72,19 +74,27 @@ module.exports = function(app, io) {
     .then(function(results) {
       io.sockets.emit('new event', results);
 
-      // Send a 201 'Created' status back to the client
-      // Not neccessary to send the event data back to client as that will already be received from the socket event
-      res.send('testing jquery prowess').status(201);
+      //Create a new chat entry while new event entry is created
+      db.ChatData.create({
+        username:req.body.username,
+        chatroom_id:req.body.chatroom_id,
+        active: true,
+        EventDatumId: 1
+      }).then(function(results) {
+        // Send a 201 'Created' status back to the client
+        // Not neccessary to send the event data back to client as that will already be received from the socket event
+        res.send('testing jquery prowess').status(201);
+      }).catch(function(err) {
+        console.log(err);
+      })
     })
     .catch(function(err) {
       console.log(err);
     })
-
-    // db.ChatData.create({
-      
-    // })
   });
 
+
+  //Functionality of login event
   app.post("/api/login", function(req, res) {
     db.UserData.findOne({where:{username:req.body.username,password:req.body.password}})
     .then(function(result){
@@ -114,27 +124,20 @@ module.exports = function(app, io) {
       })
   });
 
+
+  //Finding an event by the eventname
   app.get("/api/event/:id", function(req, res) {
     db.EventData.findOne({
       where: {
-        id: req.params.id
+        eventname: req.params.eventname
       },
       // include: [db.ChatData]
     }).then(function(result) {
       res.json(result);
     });
-  })
-
-  
-
-  app.post("/api/join/:eventname", function(req, res) {
-    
-    });
-
-
+  });
 
   // Delete an event by eventname
-  
   app.delete("/api/delete/:eventname", function(req, res) {
     db.UserData.destroy({ where: { eventname: req.params.eventname } })
     .then(function(results) {
