@@ -51,7 +51,12 @@ module.exports = function(app, io) {
   app.post("/api/events", function(req, res) {
 
     // const {eventname, creator_id, placeid, location, description} = req.body;
-    const {eventname, address, placeid, lat, lng} = req.body;
+    const {eventname, address, placeid, description, lat, lng} = req.body;
+
+    console.log('eventname', eventname, 'address', address, 'placeid:', placeid, 'description', description, 'lat:', lat, 'lng', lng);
+
+    // res.json({eventname, address, placeid, lat, lng})
+
 
     // Create new event entry in DB
     db.EventData.create({    
@@ -60,7 +65,7 @@ module.exports = function(app, io) {
       address,
       placeid: placeid,
       groupsize: 5,
-      description: 'Defacto',
+      description,
       current_groupsize: 1,
       latitude: lat,
       longitude: lng,
@@ -76,7 +81,11 @@ module.exports = function(app, io) {
         active: true,
         EventDatumId: 1
       }).then(function(results) {
-        res.json(results)
+        // Send a 201 'Created' status back to the client
+        // Not neccessary to send the event data back to client as that will already be received from the socket event
+        res.send('testing jquery prowess').status(201);
+      }).catch(function(err) {
+        console.log(err);
       })
     })
     .catch(function(err) {

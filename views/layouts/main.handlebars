@@ -17,18 +17,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
-        <!-- jQuery first,  -->
+    <!-- jQuery first,  -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js">
     </script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places" async defer></script>
 
     <!-- Import socket.io client library -->
     <script src='/socket.io/socket.io.js'></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 </head>
@@ -42,7 +47,7 @@
             </div>
             <div class="container">
             <nav class="navbar" id="navID">
-                <button onclick="myFunc(this)" class="toggle-collapse" id="toggle-button">
+                <button class="toggle-collapse" id="toggle-button">
                     <span class="toggle-icon"></span>
                 </button>
 
@@ -51,7 +56,7 @@
                         <a href="#" class="site-name">LinkUP</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#event" class="nav-link modal-trigger">Create Event</a>
+                        <a href="#create-event-form" class="nav-link modal-trigger">Create Event</a>
                     </li>
                     <li class="nav-item">
                         <a href="#search" class="nav-link modal-trigger">Search Event</a>
@@ -68,26 +73,38 @@
         </header>
     </div>
 
-    <div id="event" class="modal">
+    <div id="create-event-form" class="modal">
         <h5 class="modal-close">&#10005</h5>
         <div class="modal-content center">
             <h4>Create Event</h4>
             <form action="#">
-
-        <div class="input-field">
-            <i class="material-icons prefix">event</i>
-            <input type="text" id="event-name">
-            <label for="event-name">Enter event title</label>
-        </div>
+        
+                <div class="input-field">
+                    <i class="material-icons">event</i>
+                    <input type="text" id="event-name">
+                    <label for="event-name">Name your Event</label>
+                </div>
                 <br>
 
-        <div class="input-field">
-            <i class="material-icons prefix">location_on</i>
-                <input id="autocomplete" placeholder="Enter event address" onFocus="geolocate()" type="text"/>
-                  <button class="btn waves-effect waves-light" id="event-create" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
-        </div>
+                <div class='input-field'>
+                    <i class='material-icons'>description</i>
+                    <input type='text' id='event-description' class='active'>
+                    <label for='event-description'>Add a description</label>
+                </div>
+                <br>
+
+                <div class="input-field">
+                    <i class="material-icons">location_on</i>
+                    <input id="place-autocomplete-input" class='active' placeholder='' type="text"/>
+                    <label for="place-autocomplete-input" class='active'>Enter event address</label>
+                </div>
+                <br>
+
+                <div class='row'>
+                    <button class='btn-large black waves-effect waves-light' type='submit' name='action' id="submit-event-button">Create Event!
+                        <i class='material-icons right'>send</i>
+                    </button>
+                </div>
             </form>
                 
         </div>
@@ -127,17 +144,6 @@
         </div> --}}
     </div>
     {{{body}}}
-    <!-- Optional JavaScript -->
-    <script>
-        $(document).ready(function(){
-            $('.modal').modal();
-            $('#event-create').on('click', function(){
-                event.preventDefault();
-            })
-        });
-    </script>
-    <script src="../js/front_index.js"></script>
-
+    <script src='../js/index.js'></script>
 </body>
-
 </html>
