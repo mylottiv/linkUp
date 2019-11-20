@@ -84,7 +84,6 @@ module.exports = function(app, io) {
           username: req.body.username,
           // chatroom_id: req.body.chatroom_id,
           active: true,
-          // eventdata_id: eventResults.id,
           // userdata_id: userResults.id
           EventDatumId: eventResults.id
         }).then(function(chatResults) {
