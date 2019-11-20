@@ -24,11 +24,12 @@ module.exports = function(app, io) {
     })
   })
 
-  // Create a new example
+  // Create a new user
   app.post("/api/signup", function(req, res) {
-    db.findOne({where: {username:req.body.username}})
+    db.UserData.findOne({where: {username:req.body.username}})
     .then(function(results) {
-      if(req.body.username) {
+      console.log(results);
+      if(results) {
         res.json({status: "Failed", error: "Username already taken."})
       }
       else {
@@ -57,40 +58,49 @@ module.exports = function(app, io) {
 
     // res.json({eventname, address, placeid, lat, lng})
 
+    // Find UserData for user who submitted event
+    db.UserData.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function(userResults) {
 
-    // Create new event entry in DB
-    db.EventData.create({    
-      creator_id: '1',
-      eventname,
-      address,
-      placeid: placeid,
-      groupsize: 5,
-      description,
-      current_groupsize: 1,
-      latitude: lat,
-      longitude: lng,
-      active: true
-    })
-    .then(function(results) {
-      io.sockets.emit('new event', results);
+      const creator_id = (userResults !== undefined) ? userResults.id : 'defacto';
+      // Create new event entry in DB
+      db.EventData.create({    
+        creator_id,
+        eventname,
+        address,
+        placeid: placeid,
+        groupsize: 5,
+        description,
+        current_groupsize: 1,
+        latitude: lat,
+        longitude: lng,
+        active: true
+      }).then(function(eventResults) {
+        //Create a new chat entry for creator once new event entry is created
+        db.ChatData.create({
+          username: req.body.username,
+          // chatroom_id: req.body.chatroom_id,
+          active: true,
+          // eventdata_id: eventResults.id,
+          // userdata_id: userResults.id
+          EventDatumId: eventResults.id
+        }).then(function(chatResults) {
+          // Emit 'new event' event with data for new event
+          io.sockets.emit('new event', eventResults);
 
-      //Create a new chat entry while new event entry is created
-      db.ChatData.create({
-        username:req.body.username,
-        chatroom_id:req.body.chatroom_id,
-        active: true,
-        EventDatumId: 1
-      }).then(function(results) {
-        // Send a 201 'Created' status back to the client
-        // Not neccessary to send the event data back to client as that will already be received from the socket event
-        res.send('testing jquery prowess').status(201);
+          // Send a 201 'Created' status back to the client
+          // Not neccessary to send the event data back to client as that will already be received from the socket event
+          res.send('testing jquery prowess').status(201);
+        }).catch(function(err) {
+          console.log(err);
+        });
       }).catch(function(err) {
         console.log(err);
-      })
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
+      });
+    });
   });
 
 
@@ -108,6 +118,7 @@ module.exports = function(app, io) {
         //Sets a cookie with logintoken
         res.cookie(logintoken, token);
 
+        // Return userInfo to client for local storage
         let userInfo = {
           firstname: result.firstname,
           lastname: result.lastname,
@@ -126,11 +137,12 @@ module.exports = function(app, io) {
 
 
   //Finding an event by the eventname
-  app.get("/api/event/:id", function(req, res) {
-    db.EventData.findOne({
-      where: {
-        eventname: req.params.eventname
-      },
+  app.get("/api/event/:name", function(req, res) {
+    db.ChatData.findAll({
+      include: [{
+        model: db.EventData,
+        where: {eventname: req.params.eventname}
+      }],
       // include: [db.ChatData]
     }).then(function(result) {
       res.json(result);

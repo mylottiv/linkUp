@@ -29,8 +29,8 @@ module.exports = function(app) {
     // });
   });
   
-  app.get("/events/:id", function(req, res) {
-    db.EventData.findAll({where: { id: req.params.id } }).then(function(events) {
+  app.get("/events/:name", function(req, res) {
+    db.EventData.findAll({where: { eventname: req.params.name } }).then(function(events) {
       console.log('results', events[0].dataValues);
       res.render("chat", events[0].dataValues);
     });
