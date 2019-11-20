@@ -26,23 +26,17 @@ module.exports = function(app, io) {
 
   // Create a new user
   app.post("/api/signup", function(req, res) {
-    db.UserData.findOne({where: {username:req.body.username}})
+    
+    const {firstname, lastname, username, password, email} = req.body;
+    
+    db.UserData.findOrCreate({where: {username:req.body.username}, defaults: {firstname, lastname, username, password, email}})
     .then(function(results) {
-      console.log(results);
-      if(results) {
+      console.log(results)
+      if(!results[1]) {
         res.json({status: "Failed", error: "Username already taken."})
       }
       else {
-        db.UserData.create({      
-          firstname:req.body.firstname,
-          lastname:req.body.lastname,
-          username:req.body.username,
-          password:req.body.password,
-          email:req.body.email,
-        })
-        .then(function(results) {
-          res.json(results);
-      });
+        res.json({status: "Success", error: "User registered."})
       }
     })
   });
@@ -59,16 +53,16 @@ module.exports = function(app, io) {
     // res.json({eventname, address, placeid, lat, lng})
 
     // Find UserData for user who submitted event
-    db.UserData.findOne({
-      where: {
-        username: req.body.username
-      }
-    }).then(function(userResults) {
+    // db.UserData.findOne({
+    //   where: {
+    //     username: req.body.username
+    //   }
+    // }).then(function(userResults) {
 
-      const creator_id = (userResults !== undefined) ? userResults.id : 'defacto';
+    //   const creator_id = (userResults !== undefined) ? userResults.id : 'defacto';
       // Create new event entry in DB
       db.EventData.create({    
-        creator_id,
+        // creator_id,
         eventname,
         address,
         placeid: placeid,
@@ -99,13 +93,14 @@ module.exports = function(app, io) {
       }).catch(function(err) {
         console.log(err);
       });
-    });
+    // });
   });
 
 
   //Functionality of login event
   app.post("/api/login", function(req, res) {
-    db.UserData.findOne({where:{username:req.body.username,password:req.body.password}})
+    let username = req.body.username
+    db.UserData.findOne({where:{username, password:req.body.password}})
     .then(function(result){
       if (req.body.username && req.body.password) {
         //Creates a random token
@@ -113,9 +108,16 @@ module.exports = function(app, io) {
           return Math.random().toString(36).substr(2); // remove `0.`
         };
         let token = rand();
+
+        db.UserData.update(
+          {token: token},
+          {where: {username}}
+        ).then(function(result) {
+          res.json(result);
+        })
         
         //Sets a cookie with logintoken
-        res.cookie(logintoken, token);
+        res.cookie('logintoken', token);
 
         // Return userInfo to client for local storage
         let userInfo = {
@@ -126,7 +128,6 @@ module.exports = function(app, io) {
 
         res.json({userInfo});
 
-
       }
       else {
         return res.json({error: "Invalid login"})
@@ -134,6 +135,15 @@ module.exports = function(app, io) {
       })
   });
 
+
+  //Upon logout, the token is cleared from cookies
+  app.post("/api/logout", function(req, res) {
+    db.UserData.update({token: null},{where: {username: req.body.username}})
+    .then(function(results) {
+      res.clearCookie('logintoken');
+      res.json(results);
+    })
+  });
 
   //Finding an event by the eventname
   app.get("/api/event/:name", function(req, res) {
