@@ -113,7 +113,7 @@ function initMap(center) {
           <span class="place-name" class="title" data-eventname="${newEvent.eventname}">${newEvent.eventname}</span><br>
           <strong>Place ID:</strong> <span class="place-id" data-placeid="${newEvent.placeid}">${newEvent.placeid}</span><br>
           <span class="place-address" data-address="${newEvent.address}">${newEvent.address}</span><br>
-          <span><a href='/events/${id}'>Join Live Chatroom!</a></span>
+          <span><a href='/events/${newEvent.eventname}'>Join Live Chatroom!</a></span>
         </div>`
         );
       });

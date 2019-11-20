@@ -11,6 +11,12 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       });
+
+      // MessageData.belongsTo(models.EventData, {
+      //   foreignKey: {
+      //     allowNull: false
+      //   }
+      // })
     };
 
     return MessageData;

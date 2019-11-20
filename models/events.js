@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   const EventData = sequelize.define("EventData", {
-    creator_id:DataTypes.TEXT,
+    // creator_id:DataTypes.TEXT,
     eventname:DataTypes.TEXT,
     address:DataTypes.STRING,
     placeid:DataTypes.STRING,
@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     EventData.hasMany(models.ChatData, {
       onDelete: "cascade"
     });
+    // EventData.hasMany(models.MessageData, {
+    //   onDelete: "cascade"
+    // })
   };
 
   return EventData;

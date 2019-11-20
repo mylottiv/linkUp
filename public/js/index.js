@@ -19,6 +19,18 @@ $(document).ready(function(){
         }
     });
 
+    // Triggers set username modal if no username cookie saved
+    // if (document.cookie.username === undefined) {
+    //     console.log(document.cookie);
+    //     $('#set-username').modal('open');
+    //     $('#create-username-button').on('click', function(e) {
+    //         e.preventDefault();
+    //         document.cookie = 'username=' + $('#username').val();
+    //         $('#username').val('');
+    //         $('#set-username').modal('close');
+    //     })
+    // }
+
     // Initializes places autocomplete search
     const input = document.getElementById('place-autocomplete-input');
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -60,6 +72,7 @@ $(document).ready(function(){
         let description = $('#event-description').val();
         let lat =  eventPlace.geometry.location.lat();
         let lng = eventPlace.geometry.location.lng();
+        let username = document.cookie;
         console.log('name', eventname)
         console.log('place', placeid);
         console.log(lat);
@@ -74,7 +87,8 @@ $(document).ready(function(){
                 placeid,
                 description,
                 lat,
-                lng
+                lng,
+                username
             },
         }).done((results) => {
 

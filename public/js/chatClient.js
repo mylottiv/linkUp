@@ -43,6 +43,13 @@ $(function() {
         })
     });
 
+    socket.on('join', function(newUser) {
+        console.log('New user:', newUser);
+
+        // Add new chat message card to chat box
+        $('#chat-box').html($('#chat-box').html() + `<li class='card'><div class='card-content'>${newUser} has joined the chat!</div></li>`);
+    })
+
     // Handler for new message form submission
     $('#chat-submission').submit(function(e) {
 

@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
     var ChatData = sequelize.define("ChatData", {
       username:DataTypes.TEXT,
-      chatroom_id:DataTypes.STRING,
+      // chatroom_id:DataTypes.STRING,
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
@@ -10,11 +10,17 @@ module.exports = function(sequelize, DataTypes) {
 
     ChatData.associate = function(models) {
 
-      ChatData.belongsTo(models.EventData, {
+      ChatData.hasMany(models.MessageData, {
         foreignKey: {
           allowNull: false
         }
       });
+
+      ChatData.belongsTo(models.EventData, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
     };
 
     return ChatData;
