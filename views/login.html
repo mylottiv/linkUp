@@ -84,28 +84,34 @@
                 
         <div class="modal-content center">
             <h4>Sign Up</h4><br>
-            <form action="#">
+            <form id='create-account-form' action="#">
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="first">
+                    <input type="text" id="create-first">
                     <label for="first-name">First Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="last">
+                    <input type="text" id="create-last">
                     <label for="last-name">Last Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="email">
+                    <input type="text" id="username">
+                    <label for="username">username</label>
+                </div>
+                <br>
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="create-email">
                     <label for="email">Email</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>
-                    <input type="password" id="pass">
+                    <input type="password" id="create-pass">
                     <label for="pass">Password</label>
                 </div>
                 <br>    
@@ -114,7 +120,7 @@
                     <label for="check">Remember Me</label>
                 </div>
                 <br>        
-                <input type="submit" value="Submit" class="btn btn-large black">        
+                <input type="submit" value="Submit" id='create-account-submit' class="btn btn-large black">        
             </form>
         </div>
     </div>
@@ -160,6 +166,22 @@
     $(document).ready(function(){
         $('.parallax').parallax();
         $('.modal').modal();
+        $('#create-account-form').submit(function(e) {
+            e.preventDefault();
+            $.POST({
+                url: '/api/signup',
+                data: {
+                    firstname: $('#create-first').val(),
+                    lastname: $('#create-last').val(),
+                    username: $('#create-username').val(),
+                    email: $('#create-email').val(),
+                    password: $('#create-pass').val()
+                }
+            }).done(function(results) {
+                console.log('User successfully created', results);
+                $('#modal1').modal()
+            })
+        })
     });
 
     
