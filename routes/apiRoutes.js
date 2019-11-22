@@ -72,25 +72,24 @@ module.exports = function(app, io) {
         latitude: lat,
         longitude: lng,
         active: true
-      }).then(function(eventResults) {
-        //Create a new chat entry for creator once new event entry is created
-        db.ChatData.create({
-          username: req.body.username,
-          // chatroom_id: req.body.chatroom_id,
-          active: true,
-          // userdata_id: userResults.id
-          EventDatumId: eventResults.id
-        }).then(function(chatResults) {
+      })
+      // .then(function(eventResults) {
+      //   //Create a new chat entry for creator once new event entry is created
+      //   db.ChatData.create({
+      //     username: req.body.username,
+      //     // chatroom_id: req.body.chatroom_id,
+      //     active: true,
+      //     // userdata_id: userResults.id
+      //     EventDatumId: eventResults.id
+      //   })
+        .then(function(chatResults) {
           // Emit 'new event' event with data for new event
-          io.sockets.emit('new event', eventResults);
-
+          // io.sockets.emit('new event', eventResults);
+          // no way
           // Send a 201 'Created' status back to the client
           // Not neccessary to send the event data back to client as that will already be received from the socket event
           res.send('testing jquery prowess').status(201);
         }).catch(function(err) {
-          console.log(err);
-        });
-      }).catch(function(err) {
         console.log(err);
       });
     // });
@@ -161,7 +160,7 @@ module.exports = function(app, io) {
   // Delete an event by eventname
   app.delete("/api/delete/:eventname", function(req, res) {
     db.UserData.destroy({ where: { eventname: req.params.eventname } })
-    .then(function(results) {
+    .then(function(results) {x
       res.json(results);
     });
   });

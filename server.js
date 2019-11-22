@@ -77,14 +77,14 @@ db.sequelize.sync(syncOptions).then(function() {
     socket.on('join', function(clientConnectRequest) {
 
       // Parse out the relevant variables
-      const {username, room} = clientConnectRequest;
+      const {user, room} = clientConnectRequest;
 
       const activePar = true;
 
       // Obtain event id from database
-      // db.EventData.findOne({where: {eventname: room}})
-      // .then(function(eventResult) {
-        // const eventId = eventResult.
+      db.EventData.findOne({where: {eventname: room}})
+      .then(function(eventResult) {
+        // const eventId = eventResult;
         // // Create chat client if doesn't already exist
         // db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
         // .then(function(testResults) {
@@ -101,7 +101,7 @@ db.sequelize.sync(syncOptions).then(function() {
             socket.to(room).emit('join', user);
         //   });
         // });
-      // });
+      });
 
 
 
@@ -116,11 +116,11 @@ db.sequelize.sync(syncOptions).then(function() {
       const {roomName, user, content} = newMessage;
       
       // First find the relevant event
-      // db.EventData.findOne({
-      //   where: {
-      //     eventname: roomName
-      //   }
-      // }).then(function(eventResults) {
+      db.EventData.findOne({
+        where: {
+          eventname: roomName
+        }
+      }).then(function(eventResults) {
         // // Then find the chat client that sent the message
         // db.ChatData.findOne({
         //   where: {
@@ -138,7 +138,7 @@ db.sequelize.sync(syncOptions).then(function() {
             io.to(roomName).emit('new message', {user, content});
           // });
         // });   
-      // });     
+      });     
     });
 
     // Event handler for a currently typing user
