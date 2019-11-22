@@ -82,16 +82,16 @@ db.sequelize.sync(syncOptions).then(function() {
       const activePar = true;
 
       // Obtain event id from database
-      db.EventData.findOne({where: {eventname: room}})
-      .then(function(eventResult) {
-        const eventId = eventResult.
-        // Create chat client if doesn't already exist
-        db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
-        .then(function(testResults) {
-          // Set active to true if client exists
-          const newValues = (!testResults[1]) ? {active: true} : {};
-          db.ChatData.update({where: {username: username}}, newValues)
-          .then(function(results) {
+      // db.EventData.findOne({where: {eventname: room}})
+      // .then(function(eventResult) {
+        // const eventId = eventResult.
+        // // Create chat client if doesn't already exist
+        // db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
+        // .then(function(testResults) {
+        //   // Set active to true if client exists
+        //   const newValues = (!testResults[1]) ? {active: true} : {};
+        //   db.ChatData.update({where: {username: username}}, newValues)
+        //   .then(function(results) {
             console.log('Socket joined room:', room); 
 
             // Connect user socket to room
@@ -99,9 +99,9 @@ db.sequelize.sync(syncOptions).then(function() {
 
             // Notify the room of the new user
             socket.to(room).emit('join', user);
-          });
-        });
-      });
+        //   });
+        // });
+      // });
 
 
 
@@ -116,29 +116,29 @@ db.sequelize.sync(syncOptions).then(function() {
       const {roomName, user, content} = newMessage;
       
       // First find the relevant event
-      db.EventData.findOne({
-        where: {
-          eventname: roomName
-        }
-      }).then(function(eventResults) {
-        // Then find the chat client that sent the message
-        db.ChatData.findOne({
-          where: {
-            username: user,
-            EventDatumId: eventResults.id
-          }
-        // Save message in Message Database table
-        }).then(function(chatResults) {
-          db.MessageData.create({
-            username: user,
-            content,
-            ChatDatumId: chatResults.id
-          }).then(function(messageResults) {
+      // db.EventData.findOne({
+      //   where: {
+      //     eventname: roomName
+      //   }
+      // }).then(function(eventResults) {
+        // // Then find the chat client that sent the message
+        // db.ChatData.findOne({
+        //   where: {
+        //     username: user,
+        //     EventDatumId: eventResults.id
+        //   }
+        // // Save message in Message Database table
+        // }).then(function(chatResults) {
+        //   db.MessageData.create({
+        //     username: user,
+        //     content,
+        //     ChatDatumId: chatResults.id
+        //   }).then(function(messageResults) {
             // Sends new message to all users in room
             io.to(roomName).emit('new message', {user, content});
-          });
-        });   
-      });     
+          // });
+        // });   
+      // });     
     });
 
     // Event handler for a currently typing user

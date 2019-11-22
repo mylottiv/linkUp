@@ -13,7 +13,7 @@ $(function() {
         console.log('Client socket connected', socket.id);
 
         // Join client to current chatroom
-        socket.emit('join', clientRoomName);
+        socket.emit('join', {user: 'test', clientRoomName});
 
 
         // Client-side new message listener
