@@ -84,7 +84,7 @@ db.sequelize.sync(syncOptions).then(function() {
       // Obtain event id from database
       db.EventData.findOne({where: {eventname: room}})
       .then(function(eventResult) {
-        const eventId = eventResult.
+        const eventId = eventResult;
         // Create chat client if doesn't already exist
         db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
         .then(function(testResults) {

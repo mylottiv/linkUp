@@ -7,7 +7,7 @@ $(function() {
     const clientRoomName = $('#roomname').text();
 
     // Initialize socket connection
-    const socket = io('http://localhost:3000');
+    const socket = io('https://stormy-sands-04554.herokuapp.com');
     socket.on('connect', function() {
 
         console.log('Client socket connected', socket.id);

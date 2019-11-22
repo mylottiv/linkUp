@@ -4,20 +4,20 @@ module.exports = function(sequelize, DataTypes) {
       content:DataTypes.STRING
     });
 
-    MessageData.associate = function(models) {
+    // MessageData.associate = function(models) {
 
-      MessageData.belongsTo(models.ChatData, {
-        foreignKey: {
-          allowNull: false
-        }
-      });
+    //   MessageData.belongsTo(models.ChatData, {
+    //     foreignKey: {
+    //       allowNull: false
+    //     }
+    //   });
 
-      // MessageData.belongsTo(models.EventData, {
-      //   foreignKey: {
-      //     allowNull: false
-      //   }
-      // })
-    };
+    //   MessageData.belongsTo(models.EventData, {
+    //     foreignKey: {
+    //       allowNull: false
+    //     }
+    //   })
+    // };
 
     return MessageData;
   };
