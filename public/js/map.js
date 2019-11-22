@@ -43,7 +43,7 @@ async function getCenter() {
 function initMap(center) {
 
   // Initialize socket connection to server
-  const socket = io('https://stormy-sands-04554.herokuapp.com');
+  const socket = io();
   socket.on('connect', function() {
     
     // Initialize map with passed center location
@@ -157,4 +157,4 @@ function initMap(center) {
 
     });
   });
-}
+};

@@ -71,18 +71,18 @@ db.sequelize.sync(syncOptions).then(function() {
   // Establish socket.io server connection
   io.on('connection', function(socket) {
 
-    console.log('Socket connected:');
+    console.log('Socket connected:', socket);
 
     // Join handler for user connection to specific chat rooms
     socket.on('join', function(clientConnectRequest) {
 
       // Parse out the relevant variables
-      const {user, room} = clientConnectRequest;
+      const {user, clientRoomName} = clientConnectRequest;
 
       const activePar = true;
 
       // Obtain event id from database
-      db.EventData.findOne({where: {eventname: room}})
+      db.EventData.findOne({where: {eventname: clientRoomName}})
       .then(function(eventResult) {
         // const eventId = eventResult;
         // // Create chat client if doesn't already exist
@@ -92,13 +92,13 @@ db.sequelize.sync(syncOptions).then(function() {
         //   const newValues = (!testResults[1]) ? {active: true} : {};
         //   db.ChatData.update({where: {username: username}}, newValues)
         //   .then(function(results) {
-            console.log('Socket joined room:', room); 
+            console.log('Socket joined room:', clientRoomName); 
 
             // Connect user socket to room
-            socket.join(room);
+            socket.join(clientRoomName);
 
             // Notify the room of the new user
-            socket.to(room).emit('join', user);
+            socket.to(clientRoomName).emit('join', user);
         //   });
         // });
       });
