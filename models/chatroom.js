@@ -8,20 +8,20 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
 
-    ChatData.associate = function(models) {
+    // ChatData.associate = function(models) {
 
-      ChatData.hasMany(models.MessageData, {
-        foreignKey: {
-          allowNull: false
-        }
-      });
+    //   ChatData.hasMany(models.MessageData, {
+    //     foreignKey: {
+    //       allowNull: false
+    //     }
+    //   });
 
-      ChatData.belongsTo(models.EventData, {
-        foreignKey: {
-          allowNull: false
-        }
-      })
-    };
+    //   ChatData.belongsTo(models.EventData, {
+    //     foreignKey: {
+    //       allowNull: false
+    //     }
+    //   })
+    // };
 
     return ChatData;
   };

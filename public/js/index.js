@@ -87,8 +87,7 @@ $(document).ready(function(){
                 placeid,
                 description,
                 lat,
-                lng,
-                username
+                lng
             },
         }).done((results) => {
 

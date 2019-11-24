@@ -71,36 +71,36 @@ db.sequelize.sync(syncOptions).then(function() {
   // Establish socket.io server connection
   io.on('connection', function(socket) {
 
-    console.log('Socket connected:');
+    console.log('Socket connected:', socket);
 
     // Join handler for user connection to specific chat rooms
     socket.on('join', function(clientConnectRequest) {
 
       // Parse out the relevant variables
-      const {username, room} = clientConnectRequest;
+      const {user, clientRoomName} = clientConnectRequest;
 
       const activePar = true;
 
       // Obtain event id from database
-      db.EventData.findOne({where: {eventname: room}})
+      db.EventData.findOne({where: {eventname: clientRoomName}})
       .then(function(eventResult) {
-        const eventId = eventResult.
-        // Create chat client if doesn't already exist
-        db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
-        .then(function(testResults) {
-          // Set active to true if client exists
-          const newValues = (!testResults[1]) ? {active: true} : {};
-          db.ChatData.update({where: {username: username}}, newValues)
-          .then(function(results) {
-            console.log('Socket joined room:', room); 
+        // const eventId = eventResult;
+        // // Create chat client if doesn't already exist
+        // db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
+        // .then(function(testResults) {
+        //   // Set active to true if client exists
+        //   const newValues = (!testResults[1]) ? {active: true} : {};
+        //   db.ChatData.update({where: {username: username}}, newValues)
+        //   .then(function(results) {
+            console.log('Socket joined room:', clientRoomName); 
 
             // Connect user socket to room
-            socket.join(room);
+            socket.join(clientRoomName);
 
             // Notify the room of the new user
-            socket.to(room).emit('join', user);
-          });
-        });
+            socket.to(clientRoomName).emit('join', user);
+        //   });
+        // });
       });
 
 
@@ -121,23 +121,23 @@ db.sequelize.sync(syncOptions).then(function() {
           eventname: roomName
         }
       }).then(function(eventResults) {
-        // Then find the chat client that sent the message
-        db.ChatData.findOne({
-          where: {
-            username: user,
-            EventDatumId: eventResults.id
-          }
-        // Save message in Message Database table
-        }).then(function(chatResults) {
-          db.MessageData.create({
-            username: user,
-            content,
-            ChatDatumId: chatResults.id
-          }).then(function(messageResults) {
+        // // Then find the chat client that sent the message
+        // db.ChatData.findOne({
+        //   where: {
+        //     username: user,
+        //     EventDatumId: eventResults.id
+        //   }
+        // // Save message in Message Database table
+        // }).then(function(chatResults) {
+        //   db.MessageData.create({
+        //     username: user,
+        //     content,
+        //     ChatDatumId: chatResults.id
+        //   }).then(function(messageResults) {
             // Sends new message to all users in room
             io.to(roomName).emit('new message', {user, content});
-          });
-        });   
+          // });
+        // });   
       });     
     });
 
