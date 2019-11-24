@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": "porpoise",
     "database": "linkuptest",
     "host": "localhost",
     "dialect": "mysql"
