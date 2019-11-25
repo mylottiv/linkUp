@@ -1,13 +1,10 @@
-{{!-- <div style="display: none">
-  <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
-</div> --}}
 <div id="map"></div>
 <div id='event-infowindow-content-templates'>
   {{#each events}}
-  <div data-latitude={{latitude}} data-longitude={{longitude}} data-id={{id}} id="{{id}}-infowindow-content-template" class='event-infowindow hide'>
-    <span class="place-name" class="title" data-eventname="{{eventname}}">{{eventname}}</span><br>
-    <strong>Place ID:</strong> <span class="place-id" data-placeid={{placeid}}>{{placeid}}</span><br>
-    <span class="place-address" data-address="{{address}}">{{address}}</span><br>
+  <div data-latitude={{latitude}} data-longitude={{longitude}} data-placeid={{placeid}} data-id={{id}} id="{{id}}-infowindow-content-template" class='event-infowindow hide'>
+    <span class="event-name" class="title" data-eventname="{{eventname}}">{{eventname}}</span><br>
+    <span class="event-description">{{description}}</span><br>
+    <span class="event-address" data-address="{{address}}">{{address}}</span><br>
     <span><a href='/events/{{eventname}}'>Join Live Chatroom!</a></span>
   </div>
   {{/each}}

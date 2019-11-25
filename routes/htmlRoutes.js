@@ -3,7 +3,7 @@ const path = require('path')
 
 
 
-module.exports = function(app) {
+module.exports = function(app, key) {
   //This GET route already exists in the api routes file
   
   // Load index page
