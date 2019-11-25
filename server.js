@@ -15,7 +15,7 @@ const server = app.listen(PORT, function() {
 const io = require('socket.io').listen(server);
 
 // Import Google Maps key from env variable
-const key = process.env.GOOGLE_MAPS_KEY
+// const key = process.env.GOOGLE_MAPS_KEY
 
 var db = require("./models");
 
@@ -48,16 +48,16 @@ app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "main",
-    helpers: {
-      key: function() {return key}
-    }
+    // helpers: {
+    //   : function() {return key}
+    // }
   })
 );
 app.set("view engine", "handlebars");
 
 // Routes
 require("./routes/apiRoutes")(app, io);
-require("./routes/htmlRoutes")(app, key);
+require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: false };
 

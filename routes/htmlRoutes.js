@@ -3,8 +3,7 @@ const path = require('path')
 
 
 
-module.exports = function(app, key) {
-  //This GET route already exists in the api routes file
+module.exports = function(app) {
   
   // Load index page
   app.get("/", function(req, res) {
@@ -20,15 +19,7 @@ module.exports = function(app, key) {
     res.sendFile(path.join(__dirname.replace('routes', 'views') + '/login.html'));
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    // db.UserData.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-    //   res.render("example", {
-    //     example: dbExample
-    //   });
-    // });
-  });
-  
+  // Event chat get route  
   app.get("/events/:name", function(req, res) {
     db.EventData.findAll({where: { eventname: req.params.name } }).then(function(events) {
       console.log('results', events[0].dataValues);

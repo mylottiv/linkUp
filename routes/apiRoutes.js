@@ -3,19 +3,7 @@ const db = require("../models");
 // As with all of these api routes, front end verification will need to be done before
 // any action is completed. Normally you do this on the backend but that feature is not current priority.
 
-// Init Google Maps Client
-// const googleMapsClient = require('@google/maps').createClient({
-//   key: 'AIzaSyBWQ-sFtacE3m0IMYrFlP7w_dgNQpL-bBw',
-//   Promise: Promise
-// });
-
 module.exports = function(app, io) {
-//   // Get all examples
-//   app.get("/", function(req, res) {
-//     db.EventData.findAll().then(function(result) {
-//       res.render("index", {result})
-//   });
-// });
 
   //Get all events for map population
   app.get("/api/events", function(req, res) {
