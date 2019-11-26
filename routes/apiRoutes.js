@@ -20,8 +20,8 @@ module.exports = function(app, io) {
     // Will check for matching email and usernames, otherwise will create new User instance
     db.UserData.findOrCreate({
       where: {
-        username: username,
-        email: email
+        username,
+        email
       }, defaults: {firstName, lastName, username, password, email}})
     .then(function(results) {
       console.log(results)
@@ -95,32 +95,40 @@ module.exports = function(app, io) {
 
 
   //Functionality of login event
-  app.post("/api/login", function(req, res) {
-    let username = req.body.username
-    db.UserData.findOne({where:{username, password:req.body.password}})
-    .then(function(result){
-      if (req.body.username && req.body.password) {
+  app.put("/api/login", function(req, res) {
+    const email = req.body.email
+    const password = req.body.password
+    console.log(email, password);
+    db.UserData.findOne({where:{email: email, password: password}})
+    .then(function(data){
+
+      const user = (data !== null) ? data.dataValues : undefined;
+      
+      // If the credentials are valid
+      if (user) {
+
         //Creates a random token
         let rand = function() {
           return Math.random().toString(36).substr(2); // remove `0.`
         };
         let token = rand();
 
+        // Saves token to user database
         db.UserData.update(
           {token: token},
-          {where: {username}}
-        ).then(function(result) {
-          res.json(result);
+          {where: {id: user.id}}
+        ).then(function(results) {
+          console.log(results);
         })
         
-        //Sets a cookie with logintoken
+        //Sets a cookie for logintoken
         res.cookie('logintoken', token);
 
         // Return userInfo to client for local storage
         let userInfo = {
-          firstName: result.firstName,
-          lastName: result.lastName,
-          username: result.username
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username
         }
 
         res.json({userInfo});
@@ -128,14 +136,16 @@ module.exports = function(app, io) {
       }
       else {
         return res.json({error: "Invalid login"})
-      }
-      })
+      };
+    })
   });
 
 
   //Upon logout, the token is cleared from cookies
-  app.post("/api/logout", function(req, res) {
-    db.UserData.update({token: null},{where: {username: req.body.username}})
+  app.put("/api/logout", function(req, res) {
+    const email = req.body.email;
+    const token = req.body.token;
+    db.UserData.update({token: null},{where: {email: email, token: token}})
     .then(function(results) {
       res.clearCookie('logintoken');
       res.json(results);
