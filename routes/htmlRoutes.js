@@ -7,10 +7,9 @@ module.exports = function(app) {
   
   // Load index page
   app.get("/", function(req, res) {
-    // res.render("index");
     db.EventData.findAll({}).then(function(events) {
       console.log(events);
-      res.render("index", {events});
+      res.render("map", {events});
     });
   });
 
