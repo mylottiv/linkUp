@@ -15,14 +15,23 @@ module.exports = function(app, io) {
   // Create a new user
   app.post("/api/signup", function(req, res) {
     
-    const {firstname, lastname, username, password, email} = req.body;
+    const {firstName, lastName, username, password, email} = req.body;
     
-    db.UserData.findOrCreate({where: {username:req.body.username}, defaults: {firstname, lastname, username, password, email}})
+    // Will check for matching email and usernames, otherwise will create new User instance
+    db.UserData.findOrCreate({
+      where: {
+        username: username,
+        email: email
+      }, defaults: {firstName, lastName, username, password, email}})
     .then(function(results) {
       console.log(results)
+      
+      // If the Username or Email exists, client is notified of conflict
       if(!results[1]) {
-        res.json({status: "Failed", error: "Username already taken."})
+        res.json({status: "Failed", error: "Username or Email already taken."})
       }
+
+      // Otherwise client is notified of create success
       else {
         res.json({status: "Success", error: "User registered."})
       }
@@ -109,8 +118,8 @@ module.exports = function(app, io) {
 
         // Return userInfo to client for local storage
         let userInfo = {
-          firstname: result.firstname,
-          lastname: result.lastname,
+          firstName: result.firstName,
+          lastName: result.lastName,
           username: result.username
         }
 
