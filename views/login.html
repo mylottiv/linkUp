@@ -84,37 +84,45 @@
                 
         <div class="modal-content center">
             <h4>Sign Up</h4><br>
-            <form action="#">
+            <form id='sign-up' action="#">
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="first">
+                    <input type="text" id="first-name-sign-up">
                     <label for="first-name">First Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="last">
+                    <input type="text" id="last-name-sign-up">
                     <label for="last-name">Last Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="email">
+                    <input type="text" id="username-sign-up">
+                    <label for="username">Username</label>
+                </div>
+                <br>
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="email-sign-up">
                     <label for="email">Email</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>
-                    <input type="password" id="pass">
+                    <input type="password" id="pass-sign-up">
                     <label for="pass">Password</label>
                 </div>
                 <br>    
                 <div class="left" style="margin-left:20px;">
-                    <input type="checkbox" id="check">
+                    <input type="checkbox" id="check-sign-up">
                     <label for="check">Remember Me</label>
                 </div>
                 <br>        
-                <input type="submit" value="Submit" class="btn btn-large black">        
+                <button type="submit" value="Submit" class="btn btn-large black">
+                    <i class='material-icons right'>send</i>
+                </button>        
             </form>
         </div>
     </div>
@@ -155,15 +163,7 @@
         </div>
     </div>
 
-    <!-- <script src="/js/front_index.js"></script> -->
-    <script>
-    $(document).ready(function(){
-        $('.parallax').parallax();
-        $('.modal').modal();
-    });
-
-    
-    </script>
+    <script src="../js/login.js"></script>
 
 </body>
 
