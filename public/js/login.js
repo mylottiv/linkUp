@@ -27,6 +27,22 @@ $(document).ready(function(){
     });
 
     // Login form submit listener
+    $('#login-form').submit(function(e) {
+        e.preventDefault();
 
+        // Capture login credentials
+        const email = $('#login-email').val();
+        const password = $('#login-password').val();
+
+        // Put to login route
+        $.ajax({
+            url: '/api/login',
+            method: 'PUT',
+            data: {
+                email,
+                password
+            }
+        }).done((results) => console.log(results));
+    });
 
 });
