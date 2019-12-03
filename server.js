@@ -25,22 +25,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-
-// Middleware for forcing user login authentication
-// app.use(function(req, res, next) {
-//   if (req.cookies.logintoken !== undefined || req.url === '/login') {
-//     const message = (req.cookies.logintoken) ? "Cookie valid" : 'No token needed: Login Page';
-//     console.log(message);
-//     next();
-//   }
-//   else {
-//     res.redirect('/login');
-//   }
-// })
-
+// HTTP Request Intercept Middleware for Debug
 app.use(function(req, res, next) {
-  console.log('arrival');
+  console.log('arrival', req.url);
   next()
+})
+
+// Middleware for authenticating login status of all client requests
+app.use(function(req, res, next) {
+  if (req.cookies.logintoken !== undefined || req.url === '/login' || req.url === '/api/login') {
+    const message = (req.cookies.logintoken) ? "Cookie valid" : 'No token needed: Login';
+    console.log(message);
+    next();
+  }
+  else {
+    console.log('Invalid cookie, redirecting to login page');
+    res.redirect('/login');
+  }
 })
 
 // Handlebars
@@ -75,34 +76,38 @@ db.sequelize.sync(syncOptions).then(function() {
   // Establish socket.io server connection
   io.on('connection', function(socket) {
 
-    console.log('Socket connected:');
+    console.log('Socket connected:', socket.id);
 
     // Join handler for user connection to specific chat rooms
     socket.on('join', function(clientConnectRequest) {
 
       // Parse out the relevant variables
       const {username, room} = clientConnectRequest;
-
       const activePar = true;
 
       // Obtain event id from database
       db.EventData.findOne({where: {eventname: room}})
       .then(function(eventResult) {
-        const eventId = eventResult.
-        // Create chat client if doesn't already exist
-        db.ChatData.findOrCreate({where: {username: username}, defaults: {username, activePar, eventId}})
-        .then(function(testResults) {
-          // Set active to true if client exists
-          const newValues = (!testResults[1]) ? {active: true} : {};
-          db.ChatData.update({where: {username: username}}, newValues)
-          .then(function(results) {
-            console.log('Socket joined room:', room); 
+        const eventId = eventResult.id;
+        // Obtain user id from database
+        db.UserData.findOne({where: {username: username}}).then(function(userResults) {
+          const userId = userResults.id;
+          // Create chat client if doesn't already exist
+          db.ChatData.findOrCreate({where: {UserDatumId: userId, EventDatumId: eventId}, defaults: {username, EventDatumId: eventId, active: activePar, UserDatumId: userId}})
+          .spread(function(chatResults, created) {
+            console.log(created);
+            // Set active to true if client exists
+            const newValues = (!created) ? {active: true} : {};
+            db.ChatData.update({active: newValues}, {where: {UserDatumId: userId, EventDatumId: eventId}})
+            .then(function(results) {
+              console.log('Socket joined room:', room); 
 
-            // Connect user socket to room
-            socket.join(room);
+              // Connect user socket to room
+              socket.join(room);
 
-            // Notify the room of the new user
-            socket.to(room).emit('join', user);
+              // Notify the room of the new user
+              socket.to(room).emit('join', user);
+            });
           });
         });
       });
