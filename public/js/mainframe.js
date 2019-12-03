@@ -19,18 +19,6 @@ $(document).ready(function(){
         }
     });
 
-    // Triggers set username modal if no username cookie saved
-    // if (document.cookie.username === undefined) {
-    //     console.log(document.cookie);
-    //     $('#set-username').modal('open');
-    //     $('#create-username-button').on('click', function(e) {
-    //         e.preventDefault();
-    //         document.cookie = 'username=' + $('#username').val();
-    //         $('#username').val('');
-    //         $('#set-username').modal('close');
-    //     })
-    // }
-
     // Initializes places autocomplete search
     const input = document.getElementById('place-autocomplete-input');
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -109,4 +97,21 @@ $(document).ready(function(){
             // }
         }).catch((err) => console.log(err));
     });
+
+    // Logout confirmation handler
+    $('#logout-btn').click(function(e) {
+        e.preventDefault();
+        
+        // Send request to logout route
+        $.ajax({
+            url: '/api/logout',
+            method: 'PUT',
+            data: {
+                email: localStorage.getItem('email')
+            }
+        }).done((data) => {
+            localStorage.removeItem('username');
+            (typeof data.redirect === 'string') ? window.location = data.redirect : console.log('Error', data);
+        });
+    })
 });
