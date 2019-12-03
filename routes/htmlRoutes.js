@@ -20,6 +20,7 @@ module.exports = function(app) {
 
   // Event chat get route  
   app.get("/events/:name", function(req, res) {
+    console.log(req.params.name);
     db.EventData.findAll({where: { eventname: req.params.name } }).then(function(events) {
       console.log('results', events[0].dataValues);
       res.render("chat", events[0].dataValues);
