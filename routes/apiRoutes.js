@@ -125,13 +125,14 @@ module.exports = function(app, io) {
         res.cookie('logintoken', token);
 
         // Return userInfo to client for local storage
-        let userInfo = {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username
-        }
+        // let userInfo = {
+        //   firstName: user.firstName,
+        //   lastName: user.lastName,
+        //   username: user.username,
+        //   email: user.email
+        // }
 
-        res.json({userInfo});
+        res.send({username: data.username, redirect: '/'});
 
       }
       else {
@@ -143,12 +144,12 @@ module.exports = function(app, io) {
 
   //Upon logout, the token is cleared from cookies
   app.put("/api/logout", function(req, res) {
-    const email = req.body.email;
-    const token = req.body.token;
-    db.UserData.update({token: null},{where: {email: email, token: token}})
+    // const email = req.body.email;
+    const token = req.cookies.logintoken;
+    db.UserData.update({token: null},{where: {token: token}})
     .then(function(results) {
       res.clearCookie('logintoken');
-      res.json(results);
+      res.send({redirect: '/login'});
     })
   });
 
