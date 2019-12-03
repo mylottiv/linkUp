@@ -77,14 +77,14 @@ body{
   color: whitesmoke;
 }
 
-.nav-item:last-child > .nav-link i{
+/* .nav-item:last-child > .nav-link i{
   padding: .5em;
 }
 
 .nav-item:hover:last-child > .nav-link{
   background-color: black;
   color: white;
-}
+} */
 
 .toggle-icon,
 .toggle-icon::before,
