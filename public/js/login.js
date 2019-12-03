@@ -42,7 +42,10 @@ $(document).ready(function(){
                 email,
                 password
             }
-        }).done((results) => console.log(results));
+        }).done((data) => {
+            localStorage.setItem('username', data.username);
+            (typeof data.redirect === 'string') ? window.location = data.redirect : console.log('Error', data);
+        });
     });
 
 });
