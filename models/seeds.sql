@@ -1,0 +1,3 @@
+INSERT INTO userdata(firstname, lastname, username, password, email, createdAt, updatedAt) VALUES ('Bob', 'Schneider', 'bobby', 'porpoise', 'bobby@shmurda.com', '2019-11-26 20:55:20', '2019-12-03 16:28:11');
+INSERT INTO userdata(firstname, lastname, username, password, email, createdAt, updatedAt) VALUES ('Rob', 'Schneider', 'robby', 'porpoise', 'robby@shmurda.com', '2019-11-26 20:55:20', '2019-12-03 16:28:11');
+INSERT INTO eventdata(eventname, address, placeid, groupsize, description, current_groupsize, latitude, longitude, active, createdAt, updatedAt) VALUES ('Crown and Pound', '2911 San Jacinto Blvd, Austin, TX 78705, USA', 'ChIJYYwdDIS1RIYR-X_xPdANlfk', '5', 'SHOTS SHOTS SHOTS SHOTS', '1', '30.2925', '-97.7356', '1', '2019-12-03 17:08:47', '2019-12-03 17:08:47');
