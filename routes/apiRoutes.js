@@ -50,13 +50,13 @@ module.exports = function(app, io) {
     // res.json({eventname, address, placeid, lat, lng})
 
     // Find UserData for user who submitted event
-    // db.UserData.findOne({
-    //   where: {
-    //     username: req.body.username
-    //   }
-    // }).then(function(userResults) {
+    db.UserData.findOne({
+      where: {
+        token: req.cookies.logintoken
+      }
+    }).then(function(userResults) {
 
-    //   const creator_id = (userResults !== undefined) ? userResults.id : 'defacto';
+      // const creator_id = (userResults !== undefined) ? userResults.id : 'defacto';
       // Create new event entry in DB
       db.EventData.create({    
         // creator_id,
@@ -71,12 +71,13 @@ module.exports = function(app, io) {
         active: true
       }).then(function(eventResults) {
         //Create a new chat entry for creator once new event entry is created
+        console.log(eventResults);
         db.ChatData.create({
           username: req.body.username,
           // chatroom_id: req.body.chatroom_id,
           active: true,
-          // userdata_id: userResults.id
-          EventDatumId: eventResults.id
+          UserDatumId: userResults.id,
+          EventDatumId: eventResults.dataValues.id
         }).then(function(chatResults) {
           // Emit 'new event' event with data for new event
           io.sockets.emit('new event', eventResults);
@@ -90,7 +91,7 @@ module.exports = function(app, io) {
       }).catch(function(err) {
         console.log(err);
       });
-    // });
+    });
   });
 
 
