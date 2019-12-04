@@ -32,6 +32,7 @@ app.use(function(req, res, next) {
 })
 
 // Middleware for authenticating login status of all client requests
+// In future will want to update this to actually check if the login token is valid
 app.use(function(req, res, next) {
   if (req.cookies.logintoken !== undefined || req.url === '/login' || req.url === '/api/login') {
     const message = (req.cookies.logintoken) ? "Cookie valid" : 'No token needed: Login';
@@ -83,7 +84,6 @@ db.sequelize.sync(syncOptions).then(function() {
 
       // Parse out the relevant variables
       const {username, room} = clientConnectRequest;
-      const activePar = true;
 
       // Obtain event id from database
       db.EventData.findOne({where: {eventname: room}})
@@ -92,22 +92,28 @@ db.sequelize.sync(syncOptions).then(function() {
         // Obtain user id from database
         db.UserData.findOne({where: {username: username}}).then(function(userResults) {
           const userId = userResults.id;
-          // Create chat client if doesn't already exist
-          db.ChatData.findOrCreate({where: {UserDatumId: userId, EventDatumId: eventId}, defaults: {username, EventDatumId: eventId, active: activePar, UserDatumId: userId}})
+          // Find or Create chat client if doesn't already exist
+          db.ChatData.findOrCreate({where: {UserDatumId: userId, EventDatumId: eventId}, defaults: {username, EventDatumId: eventId, active: true, UserDatumId: userId}})
           .spread(function(chatResults, created) {
             console.log(created);
-            // Set active to true if client exists
-            const newValues = (!created) ? {active: true} : {};
-            db.ChatData.update({active: newValues}, {where: {UserDatumId: userId, EventDatumId: eventId}})
-            .then(function(results) {
-              console.log('Socket joined room:', room); 
+            function resolveJoin() {
+              console.log('Socket', socket.id, 'joined room:', room); 
 
               // Connect user socket to room
               socket.join(room);
 
               // Notify the room of the new user
-              socket.to(room).emit('join', user);
-            });
+              socket.to(room).emit('join', username);
+            };
+            // If the client exists, update active to true
+            if (!created) {
+              db.ChatData.update({active: true}, {where: {UserDatumId: userId, EventDatumId: eventId}})
+              .then(resolveJoin)
+            }
+            // Otherwise, resolve join as normal
+            else {
+              resolveJoin();
+            }
           });
         });
       });
