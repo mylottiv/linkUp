@@ -22,29 +22,26 @@ module.exports = function(app) {
   app.get("/events/:name", function(req, res) {
     console.log(req.params.name);
     // (The weird part) Construct message log through nested ORM include statements
-    db.MessageData.findAll({
-      include: [{
-        model: db.ChatData,
-        attributes: ['id'],
-        include: {
-          model: db.EventData,
-          attributes: ['id'],
-          where: { eventname: req.params.name }
-        }
-      }],
-      attributes: ['username', 'content', 'createdAt', 'updatedAt']
+    db.EventData.findOne({
+      where: { eventname: req.params.name },
+    }).then((event) => {
+      db.MessageData.findAll({
+        where: {EventDatumId: event.id},
+        attributes: ['username', 'content', 'createdAt', 'updatedAt']
       }).then(function(messageResults) {
         const payload = {
           messageLog: messageResults.map((message) => {
+            console.log('createdAt', message.dataValues.createdAt);
             return {
               user: message.dataValues.username,
               content: message.dataValues.content
-            }
+            };
           }),
           eventname: req.params.name
         };
-        console.log('results');
+        console.log('results', messageResults);
         res.render("chat", payload);
+      });
     });
     // Find the one event
     // Send its parameters as an object along with a chat.handlebars view
