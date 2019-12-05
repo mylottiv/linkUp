@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-      // MessageData.belongsTo(models.EventData, {
-      //   foreignKey: {
-      //     allowNull: false
-      //   }
-      // })
+      MessageData.belongsTo(models.EventData, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
     };
 
     return MessageData;
