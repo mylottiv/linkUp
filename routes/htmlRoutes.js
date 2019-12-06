@@ -1,55 +1,15 @@
-const db = require("../models");
-const path = require('path')
-
-
-
+const htmlController = require('../controllers/htmlController');
 module.exports = function(app) {
   
   // Load index page
-  app.get("/", function(req, res) {
-    db.EventData.findAll({}).then(function(events) {
-      console.log(events);
-      res.render("map", {events});
-    });
-  });
+  app.get("/", htmlController.serveMap);
 
   // Login page get route
-  app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname.replace('routes', 'views') + '/login.html'));
-  });
+  app.get('/login', htmlController.serveLogin);
 
   // Event chat get route  
-  app.get("/events/:name", function(req, res) {
-    console.log(req.params.name);
-    // (The weird part) Construct message log through nested ORM include statements
-    db.EventData.findOne({
-      where: { eventname: req.params.name },
-    }).then((event) => {
-      db.MessageData.findAll({
-        where: {EventDatumId: event.id},
-        attributes: ['username', 'content', 'createdAt', 'updatedAt']
-      }).then(function(messageResults) {
-        const payload = {
-          messageLog: messageResults.map((message) => {
-            console.log('createdAt', message.dataValues.createdAt);
-            return {
-              user: message.dataValues.username,
-              content: message.dataValues.content
-            };
-          }),
-          eventname: req.params.name
-        };
-        console.log('results', messageResults);
-        res.render("chat", payload);
-      });
-    });
-    // Find the one event
-    // Send its parameters as an object along with a chat.handlebars view
-    // Will render the live chatroom for that route
-  });
+  app.get("/events/:name", htmlController.serveChat);
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
-  });
+  app.get("*", htmlController.serve404);
 };
