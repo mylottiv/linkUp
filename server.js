@@ -83,10 +83,10 @@ db.sequelize.sync(syncOptions).then(function() {
     socket.on('join', function(clientConnectRequest) {
 
       // Parse out the relevant variables
-      const {username, room} = clientConnectRequest;
+      const {user, clientRoomName} = clientConnectRequest;
 
       // Obtain event id from database
-      db.EventData.findOne({where: {eventname: room}})
+      db.EventData.findOne({where: {eventname: clientRoomName}})
       .then(function(eventResult) {
         const eventId = eventResult.id;
         // Obtain user id from database
@@ -147,7 +147,7 @@ db.sequelize.sync(syncOptions).then(function() {
           db.MessageData.create({
             username: user,
             content,
-            ChatDatumId: chatResults.id
+            EventDatumId: eventResults.id
           }).then(function(messageResults) {
             // Sends new message to all users in room
             io.to(roomName).emit('new message', {user, content});

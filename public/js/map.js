@@ -43,7 +43,7 @@ async function getCenter() {
 function initMap(center) {
 
   // Initialize socket connection to server
-  const socket = io('http://localhost:3000');
+  const socket = io();
   socket.on('connect', function() {
     
     // Initialize map with passed center location
@@ -142,7 +142,7 @@ function initMap(center) {
 
       // Set the position of the marker using the place ID and location.
       marker.setPlace({
-        placeId: newEvent.placeid,
+        placeid: newEvent.placeid,
         location: {lat: parseFloat(newEvent.latitude), lng: parseFloat(newEvent.longitude)}
       });
 
@@ -157,4 +157,4 @@ function initMap(center) {
 
     });
   });
-}
+};

@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     // creator_id:DataTypes.TEXT,
     eventname:DataTypes.TEXT,
     address:DataTypes.STRING,
-    placeid:DataTypes.STRING,
+    placeid:DataTypes.TEXT,
     groupsize:DataTypes.INTEGER,
     description:DataTypes.STRING,
     current_groupsize:DataTypes.INTEGER,
