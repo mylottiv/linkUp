@@ -19,9 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     EventData.hasMany(models.ChatData, {
       onDelete: "cascade"
     });
-    // EventData.hasMany(models.MessageData, {
-    //   onDelete: "cascade"
-    // })
+    EventData.hasMany(models.MessageData, {
+      onDelete: "cascade"
+    })
   };
 
   return EventData;

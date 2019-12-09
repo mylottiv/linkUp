@@ -21,6 +21,12 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       })
+
+      ChatData.belongsTo(models.UserData, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
     };
 
     return ChatData;

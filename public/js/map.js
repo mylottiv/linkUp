@@ -88,7 +88,7 @@ function initMap(center) {
       marker.setPlace({
         
         // Variables captured from data variables on relevant infowindow template
-        placeId: $(this).children('.place-id').attr('data-placeid'),
+        placeId: $(this).attr('data-placeid'),
         location: new google.maps.LatLng(parseFloat($(this).attr('data-latitude')), parseFloat($(this).attr('data-longitude')))
       
       });
@@ -109,9 +109,9 @@ function initMap(center) {
       // Create new infowindow html element (Note: this element isn't actually rendered)
       $('#event-infowindow-content-templates').append(function() {
         return $.parseHTML(
-        `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-id=${id} id="${id}-infowindow-content-template" class='event-infowindow hide'>
+        `<div data-latitude=${newEvent.latitude} data-longitude=${newEvent.longitude} data-placeid=${newEvent.placeid} data-id=${id} id="${id}-infowindow-content-template" class='event-infowindow hide'>
           <span class="place-name" class="title" data-eventname="${newEvent.eventname}">${newEvent.eventname}</span><br>
-          <strong>Place ID:</strong> <span class="place-id" data-placeid="${newEvent.placeid}">${newEvent.placeid}</span><br>
+          <span class="event-description">${newEvent.description}</span><br>
           <span class="place-address" data-address="${newEvent.address}">${newEvent.address}</span><br>
           <span><a href='/events/${newEvent.eventname}'>Join Live Chatroom!</a></span>
         </div>`

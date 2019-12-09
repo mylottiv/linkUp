@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfWPZ5ttQ8J83OCuWTW3UD4mAHE6Gnsnk&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAFHANeslq4XJ_mH76BxABxXPRhwG-3FY&libraries=places"></script>
 
     <!-- Import socket.io client library -->
     <script src='/socket.io/socket.io.js'></script>
@@ -53,7 +53,7 @@
 
                 <ul class="side-nav">
                     <li class="nav-item">
-                        <a href="#" class="site-name">LinkUP</a>
+                        <a href="/" class="site-name">LinkUP</a>
                     </li>
                     <li class="nav-item">
                         <a href="#create-event-form" class="nav-link modal-trigger">Create Event</a>
@@ -64,9 +64,9 @@
                     <li class="nav-item">
                         <a href="#profile" class="nav-link modal-trigger">Profile</a>
                     </li>
-                    {{!-- <li class="nav-item">
-                        <a href="#messages" class="nav-link modal-trigger">Messages</a>
-                    </li> --}}
+                    <li class="nav-item">
+                        <a href="#logout" class="nav-link modal-trigger">Logout</a>
+                    </li>
                 </ul>
             </nav>
             </div>
@@ -100,31 +100,12 @@
                 </div>
                 <br>
                 <div class='row'>
-                    <button class='btn-large black waves-effect waves-light' type='submit' name='action' id="submit-event-button">Create Event!
+                    <button class='btn-large black waves-effect waves-light' type='submit' name='action'>Create Event!
                         <i class='material-icons right'>send</i>
                     </button>
                 </div>
             </form>
                 
-        </div>
-    </div>
-    <div id='set-username' class='modal'>
-        <h5 class="modal-close">&#10005</h5>
-        <div class="modal-content center">
-            <h4>Choose a username</h4>
-            <form action="#">
-                <div class="input-field">
-                    <i class="material-icons">person</i>
-                    <input id="username" class='active' placeholder='' type="text"/>
-                    <label for="username" class='active'>Give a username</label>
-                </div>
-                <br>
-                <div class='row'>
-                    <button class='btn-large black waves-effect waves-light' type='submit' name='action' id="submit-username-button">Create Event!
-                        <i class='material-icons right'>send</i>
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
         
@@ -154,14 +135,18 @@
         </div>
     </div>
 
-        {{!-- <div id="messages" class="modal">
-            <div class="modal-content">
-                <h4>Title</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda praesentium aut natus labore quod, vero ab officia deserunt ipsam laborum aliquid, corporis repellat. Quibusdam placeat harum eveniet nobis modi velit?</p>
-            </div>
-        </div> --}}
+    <div id="logout" class="modal">
+        <h5 class="modal-close">&#10005</h5>
+        <div class="modal-content center">
+            <h4>Logout?</h4>
+            <p>Do you really want to Log Out?</p>
+            <p>
+                <button id='logout-btn' class='btn-large black waves-effect waves-light'>Logout  <i class='material-icons'>exit_to_app</i></button>
+            </p>
+        </div>
+    </div>
     </div>
     {{{body}}}
-    <script src='../js/index.js'></script>
+    <script src='../js/mainframe.js'></script>
 </body>
 </html>

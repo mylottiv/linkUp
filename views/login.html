@@ -33,7 +33,7 @@
             <div class="container center">
                 <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-                    <form class="col s12" method="post">
+                    <form class="col s12" id='login-form'>
                         <div class='row'>
                             <div class='col s12'>
                             </div>
@@ -42,7 +42,7 @@
                         <div class='row'>
                             <div class='input-field col s12'>
                                 <i class="material-icons prefix">person</i>
-                                <input class='validate' type='email' name='email' id='email' />
+                                <input class='validate' type='email' name='email' id='login-email' />
                                 <label for='email'>Enter your email</label>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                         <div class='row'>
                             <div class='input-field col s12'>
                                 <i class="material-icons prefix">lock</i>
-                                <input class='validate' type='password' name='password' id='password' />
+                                <input class='validate' type='password' name='password' id='login-password' />
                                 <label for='password'>Enter your password</label>
                             </div>
                             <label style='float: right;'>
@@ -60,7 +60,9 @@
                         <br/>
                         <div class='row'>
                             <div class='col s12'>
-                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect black'>Login</button>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect black'>Login
+                                    <i class='material-icons right'>send</i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -84,37 +86,45 @@
                 
         <div class="modal-content center">
             <h4>Sign Up</h4><br>
-            <form action="#">
+            <form id='sign-up' action="#">
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="first">
+                    <input type="text" id="first-name-sign-up">
                     <label for="first-name">First Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="last">
+                    <input type="text" id="last-name-sign-up">
                     <label for="last-name">Last Name</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">person</i>
-                    <input type="text" id="email">
+                    <input type="text" id="username-sign-up">
+                    <label for="username">Username</label>
+                </div>
+                <br>
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="email-sign-up">
                     <label for="email">Email</label>
                 </div>
                 <br>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>
-                    <input type="password" id="pass">
-                    <label for="pass">Password</label>
+                    <input type="password" id="pass-sign-up">
+                    <label for="pass-sign-up">Password</label>
                 </div>
                 <br>    
                 <div class="left" style="margin-left:20px;">
-                    <input type="checkbox" id="check">
+                    <input type="checkbox" id="check-sign-up">
                     <label for="check">Remember Me</label>
                 </div>
                 <br>        
-                <input type="submit" value="Submit" class="btn btn-large black">        
+                <button type="submit" value="Submit" class="btn btn-large black">Submit
+                    <i class='material-icons right'>send</i>
+                </button>        
             </form>
         </div>
     </div>
@@ -134,16 +144,16 @@
 
         <div class="input-field">
             <i class="material-icons prefix">lock</i>
-            <input type="password" id="pass">
-            <label for="pass">New Password</label>
+            <input type="password" id="reset-pass">
+            <label for="reset-pass">New Password</label>
         </div>
 
             <br>
 
         <div class="input-field">
             <i class="material-icons prefix">lock</i>
-            <input type="password" id="pass">
-            <label for="pass">Confirm New Password</label>
+            <input type="password" id="confirm-pass">
+            <label for="confirm-pass">Confirm New Password</label>
         </div>
 
             <br>
@@ -155,15 +165,7 @@
         </div>
     </div>
 
-    <!-- <script src="/js/front_index.js"></script> -->
-    <script>
-    $(document).ready(function(){
-        $('.parallax').parallax();
-        $('.modal').modal();
-    });
-
-    
-    </script>
+    <script src="../js/login.js"></script>
 
 </body>
 
